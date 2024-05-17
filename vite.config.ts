@@ -25,7 +25,7 @@ export default defineConfig({
   build: {
     outDir: resolve(rootDir, 'dist'),
     /** Can slow down build speed. */
-    // sourcemap: isDev,
+    sourcemap: isDev,
     minify: isProduction,
     modulePreload: false,
     reportCompressedSize: isProduction,
