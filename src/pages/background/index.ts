@@ -2,21 +2,16 @@ import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 import 'webextension-polyfill';
 
 reloadOnUpdate('pages/background');
+reloadOnUpdate('pages/sidepanel');
+
 import OpenAI from 'openai';
 import { ChatCompletion } from 'openai/resources';
 import OptionStorage from '@root/src/shared/storages/OptionStorage';
 
-console.log('background loaded');
-
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
-reloadOnUpdate('pages/sidepanel');
-let openai: OpenAI;
-OptionStorage.get().then(({ openAIKey, googleKey }) => {
-  openai = new OpenAI({
-    apiKey: openAIKey,
-  });
-  console.log(openAIKey, googleKey);
+OptionStorage.get().then(({ openAIKey }) => {
+  const openai = new OpenAI({ apiKey: openAIKey });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log('message', message);
@@ -25,14 +20,14 @@ OptionStorage.get().then(({ openAIKey, googleKey }) => {
       sendSelectionText(sendResponse);
       return true;
     } else if (message.type === 'queryChatAPI') {
-      fetchAIChatAPI(message.model, message.context, sendResponse);
+      fetchAIChatAPI(openai, message.model, message.context, sendResponse);
       return true;
     }
     return true;
   });
 });
 
-const fetchAIChatAPI = async (model, context, sendResponse) => {
+const fetchAIChatAPI = async (openai, model, context, sendResponse) => {
   const chatCompletion: ChatCompletion = await openai.chat.completions.create({
     messages: context,
     model: model,
@@ -56,3 +51,5 @@ const sendSelectionText = sendResponse => {
     }
   });
 };
+
+console.log('background loaded');
