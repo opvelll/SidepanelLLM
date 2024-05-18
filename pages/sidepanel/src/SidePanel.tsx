@@ -1,4 +1,3 @@
-import '@src/SidePanel.css';
 import {
   withErrorBoundary,
   withSuspense,

@@ -5,29 +5,31 @@ console.log("Edit 'apps/chrome-extension/lib/background/index.ts' and save to re
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse): boolean => {
   if (message.type === 'getSelectedTextRequest') {
-    console.log('getSelectedTextRequest');
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      console.log('tabs', tabs);
-      chrome.scripting
-        .executeScript({
-          target: { tabId: tabs[0].id },
-          func: function getSelectedText() {
-            console.log('window', window);
-            console.log(window.getSelection().toString());
-            return window.getSelection().toString();
-          },
-        })
-        .then(result => {
-          console.log('result', result);
-          sendResponse({ response: result[0].result });
-        })
-        .catch(e => {
-          console.error(e);
-          sendResponse({ response: 'error' });
-        });
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      if (!tabs[0].id) {
+        sendResponse({ response: 'error' });
+      } else {
+        chrome.scripting
+          .executeScript({
+            target: { tabId: tabs[0].id },
+            func: function getSelectedText() {
+              const selection = window.getSelection();
+              return selection ? selection.toString() : 'error';
+            },
+          })
+          .then(result => {
+            console.log('result', result);
+            sendResponse({ response: result[0].result });
+          })
+          .catch(e => {
+            console.error(e);
+            sendResponse({ response: 'error' });
+          });
+      }
     });
     return true;
   }
+  return true;
 });
