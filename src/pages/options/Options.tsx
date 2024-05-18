@@ -1,8 +1,62 @@
-import React from 'react';
-import '@pages/options/Options.css';
+import React, { useState } from 'react';
+import useStorage from '@src/shared/hooks/useStorage';
+import OptionStorage from '@root/src/shared/storages/OptionStorage';
 
 const Options: React.FC = () => {
-  return <div className="container">Options</div>;
+  const { openAIKey: openai, googleKey: google } = useStorage(OptionStorage);
+  const [inputValueOpenAI, setInputValueOpenAI] = useState(openai);
+  const [inputValueGoogle, setInputValueGoogle] = useState(google);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('submit', inputValueOpenAI, inputValueGoogle);
+    OptionStorage.set({ openAIKey: inputValueOpenAI, googleKey: inputValueGoogle });
+  };
+
+  return (
+    <div className="p-4 max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 shadow-md rounded-md">
+        <h1 className="text-xl font-bold border-b pb-1">Option</h1>
+        <div className="space-y-6 px-4">
+          <h2 className="text-lg font-bold border-b pb-1">API Keys</h2>
+          <div className="flex items-center">
+            <label htmlFor="api-key" className="flex items-center  text-sm font-medium text-gray-700">
+              OpenAI
+            </label>
+            <div className="text-sm p-1">:</div>
+            <input
+              id="api-key"
+              type="password"
+              value={inputValueOpenAI}
+              onChange={e => setInputValueOpenAI(e.target.value)}
+              className="block p-2 ml-2 border border-gray-300 rounded-md"
+              placeholder="Enter your API key"
+            />
+          </div>
+          <div className="flex items-center">
+            <label htmlFor="api-key" className="flex items-center  text-sm font-medium text-gray-700">
+              Google
+            </label>
+            <div className="text-sm p-1">:</div>
+            <input
+              id="api-key"
+              type="password"
+              value={inputValueGoogle}
+              onChange={e => setInputValueGoogle(e.target.value)}
+              className="block p-2 ml-2 border border-gray-300 rounded-md"
+              placeholder="Enter your API key"
+            />
+          </div>
+
+          <div className="flex flex-row-reverse">
+            <button type="submit" className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-700">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default Options;
