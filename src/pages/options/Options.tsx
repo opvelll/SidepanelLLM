@@ -19,12 +19,12 @@ const Options: React.FC = () => {
         <div className="space-y-6 px-4">
           <h2 className="text-lg font-bold border-b pb-1">API Keys</h2>
           <div className="flex items-center">
-            <label htmlFor="api-key" className="flex items-center  text-sm font-medium text-gray-700">
+            <label htmlFor="api-key-open" className="flex items-center  text-sm font-medium text-gray-700">
               OpenAI
             </label>
             <div className="text-sm p-1">:</div>
             <input
-              id="api-key"
+              id="api-key-open"
               type="password"
               value={inputValueOpenAI}
               onChange={e => setInputValueOpenAI(e.target.value)}
@@ -33,12 +33,12 @@ const Options: React.FC = () => {
             />
           </div>
           <div className="flex items-center">
-            <label htmlFor="api-key" className="flex items-center  text-sm font-medium text-gray-700">
+            <label htmlFor="api-key-google" className="flex items-center  text-sm font-medium text-gray-700">
               Google
             </label>
             <div className="text-sm p-1">:</div>
             <input
-              id="api-key"
+              id="api-key-google"
               type="password"
               value={inputValueGoogle}
               onChange={e => setInputValueGoogle(e.target.value)}
