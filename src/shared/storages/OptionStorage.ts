@@ -1,13 +1,13 @@
 import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
 
-type APIKeys = { openAIKey: string; googleKey: string };
+export type APIKeySettings = { openAIKey: string; googleKey: string };
 
-type OptionStorageType = BaseStorage<APIKeys> & {
+type OptionStorageType = BaseStorage<APIKeySettings> & {
   setOpenAIKey: (key: string) => Promise<void>;
-  getKeys: () => Promise<APIKeys>;
+  getKeys: () => Promise<APIKeySettings>;
 };
 
-const storage = createStorage<APIKeys>(
+const storage = createStorage<APIKeySettings>(
   'option_storage_keys',
   { openAIKey: '', googleKey: '' },
   {
