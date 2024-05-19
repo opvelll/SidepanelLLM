@@ -7,6 +7,7 @@ reloadOnUpdate('pages/sidepanel');
 import OpenAI from 'openai';
 import { ChatCompletion } from 'openai/resources';
 import OptionStorage from '@root/src/shared/storages/OptionStorage';
+import { TextSelectionSender } from './lib/TextSelectionSender';
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
@@ -16,12 +17,9 @@ OptionStorage.get().then(({ openAIKey }) => {
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log('message', message);
     if (message.type === 'getSelectedTextRequest') {
-      console.log('getSelectedTextRequest');
-      sendSelectionText(sendResponse);
-      return true;
+      TextSelectionSender.sendSelectionText(sendResponse);
     } else if (message.type === 'queryChatAPI') {
       fetchAIChatAPI(openai, message.model, message.context, sendResponse);
-      return true;
     }
     return true;
   });
@@ -32,24 +30,7 @@ const fetchAIChatAPI = async (openai, model, context, sendResponse) => {
     messages: context,
     model: model,
   });
-  sendResponse({ response: chatCompletion.choices[0].message.content });
-};
-
-const sendSelectionText = sendResponse => {
-  chrome.tabs.query({ active: true, currentWindow: true }, async tabs => {
-    try {
-      const result = await chrome.scripting.executeScript({
-        target: { tabId: tabs[0].id },
-        func: function getSelectedText() {
-          return window.getSelection().toString();
-        },
-      });
-      sendResponse({ response: result[0].result });
-    } catch (e) {
-      console.error(e);
-      sendResponse({ response: 'error' });
-    }
-  });
+  sendResponse({ status: 'success', response: chatCompletion.choices[0].message.content });
 };
 
 console.log('background loaded');
