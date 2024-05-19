@@ -5,7 +5,8 @@ import { AIChatView } from 'react-ai-chat-view';
 import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatContextType';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import OptionStorage from '@root/src/shared/storages/OptionStorage';
-import { getModelList } from './lib/ModelFetcher';
+import { getModelNameList } from './lib/ModelFetcher';
+import { Message, isError } from './lib/MessageType';
 
 const SidePanel = () => {
   const systemPrompt = 'hello';
@@ -13,21 +14,37 @@ const SidePanel = () => {
     const res = await chrome.runtime.sendMessage({ type: 'queryChatAPI', model: modelname, context: context });
     return res.response;
   };
-  const handleGetSelectionButton = async (inputTextValue: string, setInputTextValue: (value: string) => void) => {
-    console.log('handleGetSelectionButton');
-    const res = await chrome.runtime.sendMessage({ type: 'getSelectedTextRequest' });
-    setInputTextValue('```\n' + res.response + '\n```\n');
-  };
-
-  const { openAIKey, googleKey } = useStorage(OptionStorage);
-
-  const modelList = getModelList({ openAIKey, googleKey });
+  const handleGetSelectionButton = handleRequestButton.bind(null, 'getSelectedTextRequest');
+  const handleGetSubtitlesButton = handleRequestButton.bind(null, 'getSubtitlesRequest');
+  const handleGetAllPageButton = handleRequestButton.bind(null, 'getAllPageRequest');
+  const modelList = getModelNameList(useStorage(OptionStorage));
 
   return (
     <div>
-      <AIChatView {...{ systemPrompt, fetchAIChatAPI, handleGetSelectionButton, modelName: modelList[0], modelList }} />
+      <AIChatView
+        {...{
+          systemPrompt,
+          fetchAIChatAPI,
+          handleGetSelectionButton,
+          handleGetSubtitlesButton,
+          handleGetAllPageButton,
+          modelName: modelList[0],
+          modelList,
+        }}
+      />
     </div>
   );
 };
+const handleRequestButton = async (
+  requestType: string,
+  inputTextValue: string,
+  setInputTextValue: (value: string) => void,
+) => {
+  const res: Message = await chrome.runtime.sendMessage({ type: requestType });
+  if (isError(res)) return;
+  setInputTextValue(formatResponse(inputTextValue, res));
+};
+
+const formatResponse = (inputTextValue: string, res: Message) => inputTextValue + '\n```\n' + res.response + '\n```\n';
 
 export default withErrorBoundary(withSuspense(SidePanel, <div> Loading ... </div>), <div> Error Occur </div>);
