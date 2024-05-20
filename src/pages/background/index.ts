@@ -20,6 +20,8 @@ OptionStorage.get().then(({ openAIKey }) => {
       TextSelectionSender.sendSelectionText(sendResponse);
     } else if (message.type === 'queryChatAPI') {
       fetchAIChatAPI(openai, message.model, message.context, sendResponse);
+    } else if (message.type === 'getAllPageRequest') {
+      getAllPageText(sendResponse);
     }
     return true;
   });
@@ -32,5 +34,23 @@ const fetchAIChatAPI = async (openai, model, context, sendResponse) => {
   });
   sendResponse({ status: 'success', response: chatCompletion.choices[0].message.content });
 };
+
+const getAllPageText = async sendResponse => {
+  chrome.tabs.query({ active: true, currentWindow: true }, async tabs => {
+    if (!tabs[0].id) return sendResponse({ status: 'error', response: '', error: 'No active tab found.' });
+    const result = await chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      func: getMainText,
+    });
+    if (result.length === 0 || !result[0].result)
+      return sendResponse({ status: 'error', response: '', error: 'No text found on the page.' });
+    sendResponse({ status: 'success', response: result[0].result });
+  });
+};
+
+function getMainText() {
+  const mainElement = document.querySelector('main');
+  return mainElement ? mainElement.innerText : '';
+}
 
 console.log('background loaded');

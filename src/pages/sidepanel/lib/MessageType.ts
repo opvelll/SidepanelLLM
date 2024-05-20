@@ -8,3 +8,5 @@ export type Message = {
 };
 
 export const isError = (message: Message) => message.status === 'error';
+
+export type GetTextRequest = 'getSelectedTextRequest' | 'getSubtitlesRequest' | 'getAllPageRequest';

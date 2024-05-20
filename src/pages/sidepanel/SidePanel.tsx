@@ -6,7 +6,7 @@ import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatContextT
 import useStorage from '@root/src/shared/hooks/useStorage';
 import OptionStorage from '@root/src/shared/storages/OptionStorage';
 import { getModelNameList } from './lib/ModelFetcher';
-import { Message, isError } from './lib/MessageType';
+import { GetTextRequest, Message, isError } from './lib/MessageType';
 
 const SidePanel = () => {
   const systemPrompt = 'hello';
@@ -36,12 +36,13 @@ const SidePanel = () => {
   );
 };
 const handleRequestButton = async (
-  requestType: string,
+  requestType: GetTextRequest,
   inputTextValue: string,
   setInputTextValue: (value: string) => void,
 ) => {
   const res: Message = await chrome.runtime.sendMessage({ type: requestType });
   if (isError(res)) return;
+  console.log(res);
   setInputTextValue(formatResponse(inputTextValue, res));
 };
 
