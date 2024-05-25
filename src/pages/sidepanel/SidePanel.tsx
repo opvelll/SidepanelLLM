@@ -4,8 +4,8 @@ import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import { AIChatView } from 'react-ai-chat-view';
 import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatContextType';
 import useStorage from '@root/src/shared/hooks/useStorage';
-import OptionStorage from '@root/src/shared/storages/OptionStorage';
-import { getModelNameList } from './lib/ModelFetcher';
+import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
+import { getActiveModelNames } from './lib/ModelFetcher';
 import { GetTextRequest, ReceivedMessage, ResponseMessage } from './lib/MessageType';
 import { MdOutlineSubtitles } from 'react-icons/md';
 import { SiPagekit } from 'react-icons/si';
@@ -19,25 +19,25 @@ const SidePanel = () => {
     return res.response;
   };
 
-  const modelList = getModelNameList(useStorage(OptionStorage));
+  const modelList = getActiveModelNames(useStorage(ApiKeyStorage));
 
   const topButtonDataList: ChatFormButtonData[] = [
     {
       title: 'get selection',
       icon: <FaRegCopy />,
-      func: handleRequestButton.bind(null, 'getSelectedTextRequest'),
+      func: handleRequestButton.bind(null, 'getSelectedTextRequest', 'Selected Text:'),
       color: 'text-orange-300',
     },
     {
       title: 'subtitles',
       icon: <MdOutlineSubtitles />,
-      func: handleRequestButton.bind(null, 'getSubtitlesRequest'),
+      func: handleRequestButton.bind(null, 'getSubtitlesRequest', 'Subtitles:'),
       color: 'text-red-400',
     },
     {
       title: 'all page',
       icon: <SiPagekit />,
-      func: handleRequestButton.bind(null, 'getAllPageRequest'),
+      func: handleRequestButton.bind(null, 'getAllPageRequest', 'All Page Text:'),
       color: 'text-gray-500',
     },
   ];
@@ -48,7 +48,6 @@ const SidePanel = () => {
         {...{
           systemPrompt,
           fetchAIChatAPI,
-          modelName: modelList[0],
           modelList,
           topButtonDataList,
         }}
@@ -56,8 +55,10 @@ const SidePanel = () => {
     </div>
   );
 };
+
 const handleRequestButton = async (
   requestType: GetTextRequest,
+  formatString: string,
   inputTextValue: string,
   showCaution: (value: string) => void,
 ) => {
@@ -68,13 +69,13 @@ const handleRequestButton = async (
       throw new Error(res.errorMessage);
     case 'caution':
       showCaution(res.caution);
-      return formatResponse(inputTextValue, res);
+      return formatResponse(inputTextValue, formatString, res);
     case 'success':
-      return formatResponse(inputTextValue, res);
+      return formatResponse(inputTextValue, formatString, res);
   }
 };
 
-const formatResponse = (inputTextValue: string, res: ResponseMessage) =>
-  inputTextValue + '\n```\n' + res.response + '\n```\n';
+const formatResponse = (inputTextValue: string, formatString: string, res: ResponseMessage) =>
+  inputTextValue + '\n' + formatString + '\n```\n' + res.response + '\n```\n';
 
 export default withErrorBoundary(withSuspense(SidePanel, <div> Loading ... </div>), <div> Error Occur </div>);

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import useStorage from '@src/shared/hooks/useStorage';
-import OptionStorage from '@root/src/shared/storages/OptionStorage';
+import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 
 const Options: React.FC = () => {
-  const { openAIKey, googleKey } = useStorage(OptionStorage);
+  const { openAIKey, googleKey } = useStorage(ApiKeyStorage);
   const [inputValueOpenAI, setInputValueOpenAI] = useState(openAIKey);
   const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    OptionStorage.set({ openAIKey: inputValueOpenAI, googleKey: inputValueGoogle });
+    ApiKeyStorage.set({ openAIKey: inputValueOpenAI, googleKey: inputValueGoogle });
   };
 
   return (

@@ -1,6 +1,6 @@
 // modelFetcher.ts
 
-import { APIKeySettings } from '@root/src/shared/storages/OptionStorage';
+import { APIKeySettings } from '@root/src/shared/storages/ApiKeyStorage';
 
 export type ModelData = {
   corporation: string;
@@ -176,7 +176,7 @@ const allModelList: ModelData[] = [
   },
 ];
 
-export const getModelNameList = (keys: APIKeySettings): string[] => {
+export const getActiveModelNames = (keys: APIKeySettings): string[] => {
   const activeCorporations = Object.entries(keys)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([key, value]) => value)

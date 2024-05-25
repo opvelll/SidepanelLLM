@@ -6,14 +6,14 @@ reloadOnUpdate('pages/sidepanel');
 
 import OpenAI from 'openai';
 import { ChatCompletion } from 'openai/resources';
-import OptionStorage from '@root/src/shared/storages/OptionStorage';
+import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 import getYoutubeSubtitles from './lib/YoutubeSubtitleFetcher';
 import getAllPageText from './lib/WebPageTextExtractor';
 import sendSelectionText from './lib/TextSelectionSender';
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
-OptionStorage.get().then(({ openAIKey }) => {
+ApiKeyStorage.get().then(({ openAIKey }) => {
   const openai = new OpenAI({ apiKey: openAIKey });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
