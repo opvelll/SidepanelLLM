@@ -1,12 +1,24 @@
-export type Status = 'success' | 'error';
+export type Status = 'success' | 'error' | 'caution';
+export type ResponseMessage = { response: string };
 
-export type Message = {
-  status: Status;
-  type: string;
-  response: string;
-  error: string;
+export type SuccessMessage = {
+  status: 'success';
+} & ResponseMessage;
+
+export type ErrorMessage = {
+  status: 'error';
+  errorMessage: string;
 };
 
-export const isError = (message: Message) => message.status === 'error';
+export type CautionMessage = {
+  status: 'caution';
+  caution: string;
+} & ResponseMessage;
+
+export type ReceivedMessage = SuccessMessage | ErrorMessage | CautionMessage;
 
 export type GetTextRequest = 'getSelectedTextRequest' | 'getSubtitlesRequest' | 'getAllPageRequest';
+
+export type SentMessage = {
+  type: GetTextRequest;
+};
