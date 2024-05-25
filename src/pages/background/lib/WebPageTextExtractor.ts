@@ -9,8 +9,14 @@ const getAllPageText = (sendResponse: (message: ReceivedMessage) => void) => {
 
 const getMainText = () => {
   const mainElement = document.querySelector('main');
-  console.log(mainElement);
-  return mainElement ? mainElement.innerText : '';
+  const bodyElement = document.querySelector('body');
+  if (!mainElement && !bodyElement) {
+    return '';
+  } else if (mainElement) {
+    return mainElement.textContent;
+  } else if (bodyElement) {
+    return bodyElement.textContent;
+  }
 };
 
 export default getAllPageText;
