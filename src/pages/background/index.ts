@@ -37,7 +37,12 @@ const fetchAIChatAPI = async (openai, model, context, sendResponse) => {
       messages: context,
       model: model,
     });
-    sendResponse({ status: 'success', response: chatCompletion.choices[0].message.content });
+    sendResponse({
+      status: 'success',
+      response: chatCompletion.choices[0].message.content,
+      copletion_tokens: chatCompletion.usage.completion_tokens,
+      total_tokens: chatCompletion.usage.total_tokens,
+    });
   } catch (e) {
     console.error(e);
     sendResponse({ status: 'error', errorMessage: e.message });
