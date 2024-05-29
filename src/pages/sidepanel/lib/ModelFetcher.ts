@@ -1,8 +1,9 @@
 // modelFetcher.ts
 
 import { APIKeySettings } from '@root/src/shared/storages/ApiKeyStorage';
+import { ModelDataList } from 'react-ai-chat-view/dist/components/ChatView/Type/ModelDataList';
 
-export type ModelData = {
+export type AIModelData = {
   corporation: string;
   modelName: string;
   contextWindow: number;
@@ -11,7 +12,7 @@ export type ModelData = {
   isFunctionCall: boolean;
 };
 
-const allModelList: ModelData[] = [
+const allModelList: AIModelData[] = [
   {
     corporation: 'OpenAI',
     modelName: 'gpt-4o',
@@ -176,7 +177,7 @@ const allModelList: ModelData[] = [
   },
 ];
 
-export const getActiveModelNames = (keys: APIKeySettings): string[] => {
+export const getActiveModelNames = (keys: APIKeySettings): ModelDataList => {
   const activeCorporations = Object.entries(keys)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([key, value]) => value)
@@ -189,5 +190,10 @@ export const getActiveModelNames = (keys: APIKeySettings): string[] => {
       }
     }) as string[];
 
-  return allModelList.filter(model => activeCorporations.includes(model.corporation)).map(model => model.modelName);
+  return allModelList
+    .filter(model => activeCorporations.includes(model.corporation))
+    .map(value => ({
+      modelName: value.modelName,
+      contextWindow: value.contextWindow,
+    }));
 };
