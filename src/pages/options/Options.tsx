@@ -1,90 +1,93 @@
-import React, { useState } from 'react';
-import useStorage from '@src/shared/hooks/useStorage';
-import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
-import OptionStorage from '@root/src/shared/storages/OptionStorage';
+import React, { useState, Fragment } from 'react';
+import APISettingView from './components/APISettingView';
+import SystemPromptSettingView from './components/SystemPromptSettingView';
+import useStorage from '@root/src/shared/hooks/useStorage';
+import SideButtonSettingStorage, {
+  SideButtonData,
+  SideButtonList,
+} from '@root/src/shared/storages/SideButtonSettingStorage';
 
 const Options: React.FC = () => {
-  const { openAIKey, googleKey } = useStorage(ApiKeyStorage);
-  const [inputValueOpenAI, setInputValueOpenAI] = useState(openAIKey);
-  const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
+  const sideButtonDataList = useStorage(SideButtonSettingStorage);
 
-  const defaultSystemPrompt =
-    `You are ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture. cutoff: 2023-10 Current date: ` +
-    new Date().toISOString().split('T')[0];
+  const [sideButtonFormList, setSideButtonFormList] = useState<SideButtonList>(sideButtonDataList);
 
-  const { systemPrompt } = useStorage(OptionStorage);
-  const [inputValueSystemPrompt, setInputValueSystemPrompt] = useState(
-    systemPrompt ? systemPrompt : defaultSystemPrompt,
-  );
-
-  const handleApiKeySubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    ApiKeyStorage.set({ openAIKey: inputValueOpenAI, googleKey: inputValueGoogle });
+  const updateSideButtonFormList = (index: number, sideButtonFormData: SideButtonData) => {
+    setSideButtonFormList(sideButtonFormList => {
+      const newSideButtonFormList = [...sideButtonFormList];
+      newSideButtonFormList[index] = sideButtonFormData;
+      return newSideButtonFormList;
+    });
   };
 
-  const handleSystemPromptSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    OptionStorage.setSystemPrompt(inputValueSystemPrompt);
+  const [addSideButtonForm, setAddSideButtonForm] = useState<SideButtonData>({
+    displayText: '',
+    additionalPrompts: '',
+  });
+
+  const handleAddSideButton = async () => {
+    await SideButtonSettingStorage.addSideButton(addSideButtonForm);
+    const newSideButtonDataList = await SideButtonSettingStorage.get();
+    setSideButtonFormList(newSideButtonDataList);
+    setAddSideButtonForm({
+      displayText: '',
+      additionalPrompts: '',
+    });
   };
 
   return (
     <div className="p-4 max-w-4xl mx-auto">
       <div className="space-y-6 bg-white p-6 shadow-md rounded-md">
         <h1 className="text-xl font-bold border-b pb-1">Option</h1>
+        <APISettingView />
+        <SystemPromptSettingView />
         <div className="space-y-6 px-4">
-          <h2 className="text-lg font-bold border-b pb-1">API Keys</h2>
-          <div className="flex items-center">
-            <label htmlFor="api-key-open" className="flex items-center  text-sm font-medium text-gray-700">
-              OpenAI
-            </label>
-            <div className="text-sm p-1">:</div>
+          <h2 className="text-lg font-bold border-b pb-1">Side Buttons</h2>
+          <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+            <div className=" text-sm font-medium text-gray-700">Button Display Text</div>
+            <div className=" text-sm font-medium text-gray-700 col-span-2">Additional Prompts</div>
+            <div className=" text-sm font-medium text-gray-700"></div>
+            {sideButtonFormList.map((sideButtonForm, index) => (
+              <Fragment key={index}>
+                <input
+                  className="border "
+                  type="text"
+                  value={sideButtonForm.displayText}
+                  onChange={e => updateSideButtonFormList(index, { ...sideButtonForm, displayText: e.target.value })}
+                />
+                <textarea
+                  className="border col-span-2"
+                  value={sideButtonForm.additionalPrompts}
+                  onChange={e =>
+                    updateSideButtonFormList(index, { ...sideButtonForm, additionalPrompts: e.target.value })
+                  }
+                />
+                <button
+                  type="button"
+                  className="border  bg-blue-400 text-white rounded hover:bg-blue-700"
+                  onClick={() => {
+                    SideButtonSettingStorage.setSideButtonByIndex(sideButtonForm, index);
+                  }}>
+                  Save
+                </button>
+              </Fragment>
+            ))}
             <input
-              id="api-key-open"
-              type="password"
-              value={inputValueOpenAI}
-              onChange={e => setInputValueOpenAI(e.target.value)}
-              className="block p-2 ml-2 border border-gray-300 rounded-md"
-              placeholder="Enter your API key"
+              className="border"
+              type="text"
+              value={addSideButtonForm.displayText}
+              onChange={e => setAddSideButtonForm({ ...addSideButtonForm, displayText: e.target.value })}
             />
-          </div>
-          <div className="flex items-center">
-            <label htmlFor="api-key-google" className="flex items-center  text-sm font-medium text-gray-700">
-              Google
-            </label>
-            <div className="text-sm p-1">:</div>
-            <input
-              id="api-key-google"
-              type="password"
-              value={inputValueGoogle}
-              onChange={e => setInputValueGoogle(e.target.value)}
-              className="block p-2 ml-2 border border-gray-300 rounded-md"
-              placeholder="Enter your API key"
+            <textarea
+              className="border col-span-2"
+              value={addSideButtonForm.additionalPrompts}
+              onChange={e => setAddSideButtonForm({ ...addSideButtonForm, additionalPrompts: e.target.value })}
             />
-          </div>
-
-          <div className="flex flex-row-reverse">
             <button
-              onClick={handleApiKeySubmit}
-              type="submit"
-              className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-700">
-              Save
-            </button>
-          </div>
-        </div>
-        <div className="space-y-6 px-4">
-          <h2 className="text-lg font-bold border-b pb-1">System Prompt</h2>
-          <textarea
-            className="block p-2 border border-gray-300 rounded-md w-11/12 h-32 "
-            value={inputValueSystemPrompt}
-            onChange={e => setInputValueSystemPrompt(e.target.value)}
-            placeholder={defaultSystemPrompt}
-          />
-          <div className="flex flex-row-reverse">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-400 text-white rounded hover:bg-blue-700"
-              onClick={handleSystemPromptSubmit}>
-              Save
+              type="button"
+              className="border bg-blue-400 text-white rounded hover:bg-blue-700"
+              onClick={handleAddSideButton}>
+              Add
             </button>
           </div>
         </div>
