@@ -6,6 +6,7 @@ export type SideButtonData = { displayText: string; additionalPrompts: string };
 type SideButtonSettingStorageType = BaseStorage<SideButtonList> & {
   setSideButtonByIndex: (sideButton: SideButtonData, index: number) => Promise<void>;
   addSideButton: (sideButton: SideButtonData) => Promise<void>;
+  removeSideButton: (index: number) => Promise<void>;
 };
 
 const storage = createStorage<SideButtonList>(
@@ -21,13 +22,17 @@ const SideButtonSettingStorage: SideButtonSettingStorageType = {
   ...storage,
   setSideButtonByIndex: async (sideButton, index) => {
     await storage.set(keys => {
-      const newList = keys.map((item, i) => (i === index ? sideButton : item));
-      return newList;
+      return keys.map((item, i) => (i === index ? sideButton : item));
     });
   },
   addSideButton: async sideButton => {
     await storage.set(keys => {
       return [...keys, sideButton];
+    });
+  },
+  removeSideButton: async index => {
+    await storage.set(keys => {
+      return keys.filter((_, i) => i !== index);
     });
   },
 };
