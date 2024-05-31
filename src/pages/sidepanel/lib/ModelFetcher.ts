@@ -177,8 +177,17 @@ const allModelList: AIModelData[] = [
   },
 ];
 
-export const getActiveModelNames = (keys: APIKeySettings): ModelDataList => {
-  const activeCorporations = Object.entries(keys)
+export const getActiveModelList = (settings: APIKeySettings): ModelDataList => {
+  return allModelList
+    .filter(model => activeCorporations(settings).includes(model.corporation))
+    .map(value => ({
+      modelName: value.modelName,
+      contextWindow: value.contextWindow,
+    }));
+};
+
+const activeCorporations = (keySettings: APIKeySettings): string[] =>
+  Object.entries(keySettings)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .filter(([key, value]) => value)
     .map(([key]) => {
@@ -188,12 +197,4 @@ export const getActiveModelNames = (keys: APIKeySettings): ModelDataList => {
         case 'googleKey':
           return 'Google';
       }
-    }) as string[];
-
-  return allModelList
-    .filter(model => activeCorporations.includes(model.corporation))
-    .map(value => ({
-      modelName: value.modelName,
-      contextWindow: value.contextWindow,
-    }));
-};
+    });
