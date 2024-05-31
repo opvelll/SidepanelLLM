@@ -35,10 +35,10 @@ export default function SideButtonSettingView() {
   return (
     <div className="space-y-6 px-4">
       <h2 className="text-lg font-bold border-b pb-1">Side Buttons</h2>
-      <div className="grid grid-cols-4 gap-x-2 gap-y-4">
+      <div className="grid grid-cols-7 gap-x-2 gap-y-4">
         <div className=" text-sm font-medium text-gray-700">Button Display Text</div>
-        <div className=" text-sm font-medium text-gray-700 col-span-2">Additional Prompts</div>
-        <div className=" text-sm font-medium text-gray-700"></div>
+        <div className=" text-sm font-medium text-gray-700 col-span-4">Additional Prompts</div>
+        <div className=" text-sm font-medium text-gray-700 col-span-2"></div>
         {sideButtonFormList.map((sideButtonForm, index) => (
           <Fragment key={index}>
             <input
@@ -48,17 +48,26 @@ export default function SideButtonSettingView() {
               onChange={e => updateSideButtonFormList(index, { ...sideButtonForm, displayText: e.target.value })}
             />
             <textarea
-              className="border col-span-2"
+              className="border col-span-4"
               value={sideButtonForm.additionalPrompts}
               onChange={e => updateSideButtonFormList(index, { ...sideButtonForm, additionalPrompts: e.target.value })}
             />
             <button
               type="button"
-              className="border  bg-blue-400 text-white rounded hover:bg-blue-700"
+              className="border  bg-blue-400 text-white rounded hover:bg-blue-700 col-span-1"
               onClick={() => {
                 SideButtonSettingStorage.setSideButtonByIndex(sideButtonForm, index);
               }}>
               Save
+            </button>
+            <button
+              type="button"
+              className="border  bg-red-400 text-white rounded hover:bg-red-700 col-span-1"
+              onClick={() => {
+                SideButtonSettingStorage.removeSideButton(index);
+                setSideButtonFormList(sideButtonFormList.filter((_, i) => i !== index));
+              }}>
+              Delete
             </button>
           </Fragment>
         ))}
@@ -69,13 +78,13 @@ export default function SideButtonSettingView() {
           onChange={e => setAddSideButtonForm({ ...addSideButtonForm, displayText: e.target.value })}
         />
         <textarea
-          className="border col-span-2"
+          className="border col-span-4"
           value={addSideButtonForm.additionalPrompts}
           onChange={e => setAddSideButtonForm({ ...addSideButtonForm, additionalPrompts: e.target.value })}
         />
         <button
           type="button"
-          className="border bg-blue-400 text-white rounded hover:bg-blue-700"
+          className="border bg-blue-400 text-white rounded hover:bg-blue-700 col-span-2"
           onClick={handleAddSideButton}>
           Add
         </button>
