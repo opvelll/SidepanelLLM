@@ -1,9 +1,9 @@
 import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
 
-const executeScript = async (
-  func,
+const executeScript = async <t>(
+  func: () => t,
   funcErrorMessage: string,
-  func2: (result: string) => Promise<ReceivedMessage>,
+  func2: (result: t) => Promise<ReceivedMessage>,
 ): Promise<ReceivedMessage> => {
   try {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -17,7 +17,7 @@ const executeScript = async (
     if (result.length === 0 || !result[0].result) {
       return { status: 'error', errorMessage: funcErrorMessage };
     } else {
-      return await func2(result[0].result as string);
+      return await func2(result[0].result as t);
     }
   } catch (e) {
     console.error(e);
