@@ -5,12 +5,14 @@ reloadOnUpdate('pages/background');
 reloadOnUpdate('pages/sidepanel');
 
 import OpenAI from 'openai';
-import { ChatCompletion } from 'openai/resources';
+
 import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 import getYoutubeSubtitles from './lib/YoutubeSubtitleFetcher';
 import getAllPageText from './lib/WebPageTextExtractor';
 import sendSelectionText from './lib/TextSelectionSender';
-import { ReceivedMessage } from '../sidepanel/lib/MessageType';
+
+import { captureVisibleTab } from './lib/Capture';
+import { fetchAIChatAPI } from './lib/ChatAPI';
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
@@ -29,39 +31,12 @@ const handleMessages = async () => {
     } else if (message.type === 'getSubtitlesRequest') {
       getYoutubeSubtitles().then(result => sendResponse(result));
     } else if (message.type === 'getScreenshot') {
-      try {
-        chrome.tabs.captureVisibleTab(null, { format: 'png' }, image => {
-          console.log('image', image);
-          if (!image) throw new Error('Failed to capture screenshot');
-          sendResponse({ status: 'success', response: '', image_url: image });
-        });
-      } catch (e) {
-        console.error(e);
-        sendResponse({ status: 'error', errorMessage: e.message });
-      }
+      captureVisibleTab(sendResponse);
     }
-    return true; // keep the message channel open until sendResponse is called
+    return true;
   });
 };
 
 handleMessages();
-
-const fetchAIChatAPI = async (openai, model, context): Promise<ReceivedMessage> => {
-  try {
-    const chatCompletion: ChatCompletion = await openai.chat.completions.create({
-      messages: context,
-      model: model,
-    });
-    return {
-      status: 'success',
-      response: chatCompletion.choices[0].message.content,
-      completion_tokens: chatCompletion.usage.completion_tokens,
-      total_tokens: chatCompletion.usage.total_tokens,
-    };
-  } catch (e) {
-    console.error(e);
-    return { status: 'error', errorMessage: e.message };
-  }
-};
 
 console.log('background loaded');
