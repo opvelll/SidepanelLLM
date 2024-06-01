@@ -1,22 +1,18 @@
 import { getSubtitles } from 'youtube-captions-scraper';
 import executeScript from './ChromeTabScriptExecutor';
+import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
 
-const getYoutubeSubtitles = sendResponse => {
-  executeScript(
-    sendResponse,
-    getVideoIdFromUrl,
-    'YoutubeアドレスからvideoIDを取り出せませんでした。',
-    async (result, sendResponse) => {
-      try {
-        const subtitles = await getSubtitles({ videoID: result, lang: 'en' });
-        const concatenatedSubtitles = concatenateSubtitles(subtitles);
-        sendResponse({ status: 'success', response: concatenatedSubtitles });
-      } catch (e) {
-        console.error(e);
-        sendResponse({ status: 'error', errorMessage: e.message });
-      }
-    },
-  );
+const getYoutubeSubtitles = async () => {
+  return await executeScript(getVideoIdFromUrl, 'YoutubeアドレスからvideoIDを取り出せませんでした。', async result => {
+    try {
+      const subtitles = await getSubtitles({ videoID: result, lang: 'en' });
+      const concatenatedSubtitles = concatenateSubtitles(subtitles);
+      return { status: 'success', response: concatenatedSubtitles } as ReceivedMessage;
+    } catch (e) {
+      console.error(e);
+      return { status: 'error', errorMessage: e.message };
+    }
+  });
 };
 
 const getVideoIdFromUrl = () => {

@@ -1,9 +1,9 @@
 import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
-const getAllPageText = (sendResponse: (message: ReceivedMessage) => void) => {
-  executeScript(sendResponse, getMainText, 'ページから文章を取り出せませんでした。', (result, sendResponse) => {
-    sendResponse({ status: 'success', response: result });
+const getAllPageText = async (): Promise<ReceivedMessage> => {
+  return await executeScript(getMainText, 'ページから文章を取り出せませんでした。', async result => {
+    return { status: 'success', response: result } as ReceivedMessage;
   });
 };
 

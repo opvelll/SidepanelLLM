@@ -10,42 +10,57 @@ import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 import getYoutubeSubtitles from './lib/YoutubeSubtitleFetcher';
 import getAllPageText from './lib/WebPageTextExtractor';
 import sendSelectionText from './lib/TextSelectionSender';
+import { ReceivedMessage } from '../sidepanel/lib/MessageType';
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
-ApiKeyStorage.get().then(({ openAIKey }) => {
+const handleMessages = async () => {
+  const { openAIKey } = await ApiKeyStorage.get();
   const openai = new OpenAI({ apiKey: openAIKey });
 
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log('message', message);
     if (message.type === 'getSelectedTextRequest') {
-      sendSelectionText(sendResponse);
+      sendSelectionText().then(result => sendResponse(result));
     } else if (message.type === 'queryChatAPI') {
-      fetchAIChatAPI(openai, message.model, message.context, sendResponse);
+      fetchAIChatAPI(openai, message.model, message.context).then(result => sendResponse(result));
     } else if (message.type === 'getAllPageRequest') {
-      getAllPageText(sendResponse);
+      getAllPageText().then(result => sendResponse(result));
     } else if (message.type === 'getSubtitlesRequest') {
-      getYoutubeSubtitles(sendResponse);
+      getYoutubeSubtitles().then(result => sendResponse(result));
+    } else if (message.type === 'getScreenshot') {
+      try {
+        chrome.tabs.captureVisibleTab(null, { format: 'png' }, image => {
+          console.log('image', image);
+          if (!image) throw new Error('Failed to capture screenshot');
+          sendResponse({ status: 'success', response: '', image_url: image });
+        });
+      } catch (e) {
+        console.error(e);
+        sendResponse({ status: 'error', errorMessage: e.message });
+      }
     }
-    return true;
+    return true; // keep the message channel open until sendResponse is called
   });
-});
+};
 
-const fetchAIChatAPI = async (openai, model, context, sendResponse) => {
+handleMessages();
+
+const fetchAIChatAPI = async (openai, model, context): Promise<ReceivedMessage> => {
   try {
     const chatCompletion: ChatCompletion = await openai.chat.completions.create({
       messages: context,
       model: model,
     });
-    sendResponse({
+    return {
       status: 'success',
       response: chatCompletion.choices[0].message.content,
-      copletion_tokens: chatCompletion.usage.completion_tokens,
+      completion_tokens: chatCompletion.usage.completion_tokens,
       total_tokens: chatCompletion.usage.total_tokens,
-    });
+    };
   } catch (e) {
     console.error(e);
-    sendResponse({ status: 'error', errorMessage: e.message });
+    return { status: 'error', errorMessage: e.message };
   }
 };
 

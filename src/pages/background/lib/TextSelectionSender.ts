@@ -1,8 +1,9 @@
+import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
-const sendSelectionText = sendResponse => {
-  executeScript(sendResponse, getSelectedText, 'No Selected Text.', (result, sendResponse) => {
-    sendResponse({ status: 'success', response: result });
+const sendSelectionText = async (): Promise<ReceivedMessage> => {
+  return await executeScript(getSelectedText, 'No Selected Text.', async (result: string): Promise<ReceivedMessage> => {
+    return { status: 'success', response: result } as ReceivedMessage;
   });
 };
 
