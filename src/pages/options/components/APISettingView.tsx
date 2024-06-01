@@ -3,9 +3,10 @@ import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 import { useState } from 'react';
 
 export default function APISettingView() {
-  const { openAIKey } = useStorage(ApiKeyStorage);
+  const { openAIKey, googleKey } = useStorage(ApiKeyStorage);
   const [inputValueOpenAI, setInputValueOpenAI] = useState(openAIKey);
-  //const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
 
   const handleApiKeySubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
