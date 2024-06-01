@@ -3,9 +3,9 @@ import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
 import { useState } from 'react';
 
 export default function APISettingView() {
-  const { openAIKey, googleKey } = useStorage(ApiKeyStorage);
+  const { openAIKey } = useStorage(ApiKeyStorage);
   const [inputValueOpenAI, setInputValueOpenAI] = useState(openAIKey);
-  const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
+  //const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);
 
   const handleApiKeySubmit = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ export default function APISettingView() {
           placeholder="Enter your API key"
         />
       </div>
-      <div className="flex items-center">
+      {/* <div className="flex items-center">
         <label htmlFor="api-key-google" className="flex items-center  text-sm font-medium text-gray-700">
           Google
         </label>
@@ -42,7 +42,7 @@ export default function APISettingView() {
           className="block p-2 ml-2 border border-gray-300 rounded-md"
           placeholder="Enter your API key"
         />
-      </div>
+      </div> */}
 
       <div className="flex flex-row-reverse">
         <button
