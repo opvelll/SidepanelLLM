@@ -31,7 +31,8 @@
     "react-dom": "18.2.0",
     "react-icons": "^5.2.1",
     "webextension-polyfill": "0.10.0",
-    "youtube-captions-scraper": "^2.0.3"
+    "youtube-captions-scraper": "^2.0.3",
+    "react-ai-chat-view": "file:../react-ai-chat-view"
   },
   "devDependencies": {
     "@commitlint/cli": "18.4.4",
