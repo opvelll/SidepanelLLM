@@ -3,8 +3,6 @@ import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 import { AIChatView } from 'react-ai-chat-view';
 import useStorage from '@root/src/shared/hooks/useStorage';
-import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
-import { getActiveModelList } from './lib/ModelFetcher';
 import { CautionMessage, GetTextRequest, ReceivedMessage, SuccessMessage } from './lib/MessageType';
 import { MdOutlineSubtitles, MdScreenshotMonitor } from 'react-icons/md';
 import { SiPagekit } from 'react-icons/si';
@@ -22,6 +20,7 @@ import { AIChatResponse } from 'react-ai-chat-view/dist/components/ChatView/Type
 const SidePanel = () => {
   const systemPrompt = useStorage(SystemPromptStorage);
   const sideButtonList = useStorage(SideButtonSettingStorage);
+
   const fetchAIChatAPI = async (modelname: string, context: ChatContextType): Promise<AIChatResponse> => {
     const res: ReceivedMessage = await chrome.runtime.sendMessage({
       type: 'queryChatAPI',
@@ -35,8 +34,6 @@ const SidePanel = () => {
       totalTokenCount: res.total_tokens,
     };
   };
-
-  const modelList = getActiveModelList(useStorage(ApiKeyStorage));
 
   const topButtonDataList: ChatFormButtonData[] = [
     {
@@ -84,7 +81,6 @@ const SidePanel = () => {
         {...{
           systemPrompt: systemPrompt ? systemPrompt : defaultSystemPrompt,
           fetchAIChatAPI,
-          modelList,
           topButtonDataList,
           bottomButtonDataList: sideButtonDataToButtonDataList(sideButtonList),
         }}
