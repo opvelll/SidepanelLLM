@@ -17,7 +17,6 @@ const manifest = {
   description: '__MSG_extensionDescription__',
   permissions: ['storage', 'sidePanel', 'activeTab', 'scripting', 'tabs'],
   host_permissions: ['<all_urls>'],
-
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
   },
@@ -27,35 +26,17 @@ const manifest = {
     type: 'module',
   },
   action: {
-    // default_popup: 'src/pages/popup/index.html',
-    default_icon: 'icon-34_a.png',
-    default_title: 'Click to open panel',
-  },
-  // chrome_url_overrides: {
-  //   newtab: 'src/pages/newtab/index.html',
-  // },
-  icons: {
-    128: 'icon-128_a.png',
-  },
-  // content_scripts: [
-  //   {
-  //     matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-  //     js: ['src/pages/contentInjected/index.js'],
-  //     // KEY for cache invalidation
-  //     css: ['assets/css/contentStyle<KEY>.chunk.css'],
-  //   },
-  //   {
-  //     matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-  //     js: ['src/pages/contentUI/index.js'],
-  //   },
-  // ],
-  //devtools_page: 'src/pages/devtools/index.html',
-  web_accessible_resources: [
-    {
-      resources: ['assets/js/*.js', 'assets/css/*.css', 'icon-128_a.png', 'icon-34_a.png'],
-      matches: ['*://*/*'],
+    default_icon: {
+      34: 'icon-34_light.png',
+      48: 'icon-48_light.png',
+      128: 'icon-128_light.png',
     },
-  ],
+  },
+
+  icons: {
+    48: 'icon-48_light.png',
+    128: 'icon-128_light.png',
+  },
 };
 
 export default manifest;
