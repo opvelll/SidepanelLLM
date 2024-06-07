@@ -12,8 +12,9 @@ type SideButtonSettingStorageType = BaseStorage<SideButtonList> & {
 const storage = createStorage<SideButtonList>(
   'side_button_setting_storage',
   [
-    { displayText: '1', additionalPrompts: '全体が把握できるように、重要な部分を日本語でまとめてくれる？' },
+    { displayText: '1', additionalPrompts: '解説してもらえる？日本語で。' },
     { displayText: '2', additionalPrompts: '日本語訳してもらえる？' },
+    { displayText: '3', additionalPrompts: '概要は？日本語で。' },
   ],
   {
     storageType: StorageType.Local,
