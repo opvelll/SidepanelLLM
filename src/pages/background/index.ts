@@ -14,7 +14,8 @@ import { fetchAIChatAPI } from './lib/ChatAPI';
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log('message', message);
+  if (import.meta.env.MODE === 'development') console.log('message', message);
+
   if (message.type === 'getSelectedTextRequest') {
     sendSelectionText().then(result => sendResponse(result));
   } else if (message.type === 'queryChatAPI') {
