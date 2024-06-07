@@ -1,5 +1,5 @@
 import useStorage from '@root/src/shared/hooks/useStorage';
-import { cutoffAndCurrentDate, defaultSystemPrompt } from '@root/src/shared/storages/Prompt';
+import { cutoffAndCurrentDate, defaultSystemPrompt } from '@root/src/shared/storages/SystemPrompt';
 import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
 import { useState } from 'react';
 

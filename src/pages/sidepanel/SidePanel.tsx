@@ -15,7 +15,7 @@ import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatView/Typ
 import SideButtonSettingStorage, { SideButtonData } from '@root/src/shared/storages/SideButtonSettingStorage';
 import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
 import { AIChatResponse } from 'react-ai-chat-view/dist/components/ChatView/Type/AIChatAPIType';
-import { createPrompt } from '@root/src/shared/storages/Prompt';
+import { createPrompt } from '@root/src/shared/storages/SystemPrompt';
 
 const SidePanel = () => {
   const systemPrompt = useStorage(SystemPromptStorage);

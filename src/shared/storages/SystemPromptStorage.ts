@@ -1,5 +1,5 @@
 import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
-import { SystemPrompt } from './Prompt';
+import { SystemPrompt } from './SystemPrompt';
 
 type SystemPromptStorageType = BaseStorage<SystemPrompt> & {
   setSystemPrompt: (prompt: string) => Promise<void>;
