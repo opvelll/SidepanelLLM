@@ -12,10 +12,10 @@ import {
   SideButtonFuncResponse,
 } from 'react-ai-chat-view/dist/components/ChatView/ChatForm/ChatFormSideButton';
 import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatView/Type/ChatContextType';
-import defaultSystemPrompt from '@root/src/shared/storages/Prompt';
 import SideButtonSettingStorage, { SideButtonData } from '@root/src/shared/storages/SideButtonSettingStorage';
 import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
 import { AIChatResponse } from 'react-ai-chat-view/dist/components/ChatView/Type/AIChatAPIType';
+import { createPrompt } from '@root/src/shared/storages/Prompt';
 
 const SidePanel = () => {
   const systemPrompt = useStorage(SystemPromptStorage);
@@ -62,7 +62,6 @@ const SidePanel = () => {
   ];
 
   const sideButtonDataToButtonDataList = (sideButtonDataList: SideButtonData[]) => {
-    //console.log('sideButtonDataList', sideButtonDataList);
     return sideButtonDataList.map(sideButtonData => {
       return {
         title: sideButtonData.displayText,
@@ -79,7 +78,7 @@ const SidePanel = () => {
     <div>
       <AIChatView
         {...{
-          systemPrompt: systemPrompt ? systemPrompt : defaultSystemPrompt,
+          systemPrompt: createPrompt(systemPrompt),
           fetchAIChatAPI,
           topButtonDataList,
           bottomButtonDataList: sideButtonDataToButtonDataList(sideButtonList),
@@ -97,7 +96,9 @@ const handleRequestButton = async (
   showCaution: (value: string) => void,
 ): Promise<SideButtonFuncResponse> => {
   const res: ReceivedMessage = await chrome.runtime.sendMessage({ type: requestType });
-  console.log('response sidepanel', res);
+
+  if (import.meta.env.MODE === 'development') console.log('response sidepanel', res);
+
   switch (res.status) {
     case 'error':
       throw new Error(res.errorMessage);

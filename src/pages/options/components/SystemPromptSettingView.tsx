@@ -1,17 +1,17 @@
 import useStorage from '@root/src/shared/hooks/useStorage';
-import defaultSystemPrompt from '@root/src/shared/storages/Prompt';
+import { cutoffAndCurrentDate, defaultSystemPrompt } from '@root/src/shared/storages/Prompt';
 import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
 import { useState } from 'react';
 
 export default function SystemPromptSettingView() {
-  const systemPrompt = useStorage(SystemPromptStorage);
-  const [inputValueSystemPrompt, setInputValueSystemPrompt] = useState(
-    systemPrompt ? systemPrompt : defaultSystemPrompt,
-  );
-
-  const handleSystemPromptSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  const { isIncludeCutoffAndCurrentDate } = useStorage(SystemPromptStorage);
+  const [inputValueSystemPrompt, setInputValueSystemPrompt] = useState('');
+  const [isCheckIncludeCutoffAndCurrentDate, setIsCheckIncludeCutoffAndCurrentDate] =
+    useState(isIncludeCutoffAndCurrentDate);
+  const handleSystemPromptSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    SystemPromptStorage.setSystemPrompt(inputValueSystemPrompt);
+    await SystemPromptStorage.setSystemPrompt(inputValueSystemPrompt);
+    await SystemPromptStorage.setIncludeCutoffAndCurrentDate(isCheckIncludeCutoffAndCurrentDate);
   };
 
   return (
@@ -23,6 +23,20 @@ export default function SystemPromptSettingView() {
         onChange={e => setInputValueSystemPrompt(e.target.value)}
         placeholder={defaultSystemPrompt}
       />
+      {/* チェックボタンでsystem promptにcutoff,currentdateの文を追加するかの設定 */}
+      <div className="flex items-center space-x-2">
+        <input
+          id="includeCutoffAndCurrentDate"
+          checked={isCheckIncludeCutoffAndCurrentDate}
+          onChange={() => setIsCheckIncludeCutoffAndCurrentDate(!isIncludeCutoffAndCurrentDate)}
+          type="checkbox"
+          className="h-4 w-4"
+        />
+        <label htmlFor="includeCutoffAndCurrentDate">
+          Include cutoff and current date {'"'} <span className="text-gray-500">{cutoffAndCurrentDate}</span> {'"'}
+        </label>
+      </div>
+      {/* save button */}
       <div className="flex flex-row-reverse">
         <button
           type="submit"
