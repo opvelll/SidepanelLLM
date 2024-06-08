@@ -1,11 +1,15 @@
 # Chrome Extension - Chrome AI Chat
 
-Chrome のサイドバーでAI Chatができるようになるプラグインです。現在開発中α版。OpenAIのAPIのみ対応。
+Chrome のサイドバーでAI Chatができるようになる拡張機能です。現在開発中α版。OpenAIのAPIのみ対応。
 
 他にも似たような拡張機能もありますし、OpenAIもデスクトップ版など出していて、この拡張を作る意味もあまりないのですが、
 APIキー使用料金のみ支払いたいというのと、APIを直接触ってみたいので作成しました。
 
 ![sidepanel](<doc/スクリーンショット 2024-06-02 143002.png>)
+
+![alt text](doc/sidepanel1.gif)
+![alt text](doc/sidepanel2.gif)
+![alt text](doc/sidepanel3.gif)
 
 ### 使うのに必要なもの
 
