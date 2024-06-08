@@ -1,30 +1,37 @@
 import React from 'react';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
-import { AIChatView } from 'react-ai-chat-view';
+
+import {
+  // eslint-disable-next-line import/named
+  AIChatResponse,
+  AIChatView,
+  // eslint-disable-next-line import/named
+  AIModelData,
+  // eslint-disable-next-line import/named
+  ChatContextType,
+  // eslint-disable-next-line import/named
+  ChatFormButtonData,
+  // eslint-disable-next-line import/named
+  SideButtonFuncResponse,
+} from 'react-ai-chat-view';
 import useStorage from '@root/src/shared/hooks/useStorage';
 import { CautionMessage, GetTextRequest, ReceivedMessage, SuccessMessage } from './lib/MessageType';
 import { MdOutlineSubtitles, MdScreenshotMonitor } from 'react-icons/md';
 import { SiPagekit } from 'react-icons/si';
 import { FaRegCopy } from 'react-icons/fa';
-import {
-  ChatFormButtonData,
-  SideButtonFuncResponse,
-} from 'react-ai-chat-view/dist/components/ChatView/ChatForm/ChatFormSideButton';
-import { ChatContextType } from 'react-ai-chat-view/dist/components/ChatView/Type/ChatContextType';
 import SideButtonSettingStorage, { SideButtonData } from '@root/src/shared/storages/SideButtonSettingStorage';
 import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
-import { AIChatResponse } from 'react-ai-chat-view/dist/components/ChatView/Type/AIChatAPIType';
 import { createPrompt } from '@root/src/shared/storages/SystemPrompt';
 
 const SidePanel = () => {
   const systemPrompt = useStorage(SystemPromptStorage);
   const sideButtonList = useStorage(SideButtonSettingStorage);
 
-  const fetchAIChatAPI = async (modelname: string, context: ChatContextType): Promise<AIChatResponse> => {
+  const fetchAIChatAPI = async (modelData: AIModelData, context: ChatContextType): Promise<AIChatResponse> => {
     const res: ReceivedMessage = await chrome.runtime.sendMessage({
       type: 'queryChatAPI',
-      model: modelname,
+      model: modelData.modelName,
       context: context,
     });
     if (res.status === 'error') throw new Error(res.errorMessage);
@@ -64,7 +71,7 @@ const SidePanel = () => {
   const sideButtonDataToButtonDataList = (sideButtonDataList: SideButtonData[]) => {
     return sideButtonDataList.map(sideButtonData => {
       return {
-        title: sideButtonData.displayText,
+        title: sideButtonData.additionalPrompts,
         icon: <div>{sideButtonData.displayText}</div>,
         func: async (inputTextValue: string) => {
           return { newText: inputTextValue + '\n' + sideButtonData.additionalPrompts + '\n' };
