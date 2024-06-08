@@ -18,11 +18,12 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@chrome-extension-boilerplate/shared": "workspace:*"
+    "@chrome-extension-boilerplate/shared": "workspace:*",
+    "react-ai-chat-view": "0.7.6-alpha.0"
   },
   "devDependencies": {
+    "@chrome-extension-boilerplate/hmr": "workspace:*",
     "@chrome-extension-boilerplate/tailwindcss-config": "workspace:*",
-    "@chrome-extension-boilerplate/tsconfig": "workspace:*",
-    "@chrome-extension-boilerplate/hmr": "workspace:*"
+    "@chrome-extension-boilerplate/tsconfig": "workspace:*"
   }
 }

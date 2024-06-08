@@ -3,20 +3,17 @@ import {
   withSuspense,
 } from '@chrome-extension-boilerplate/shared';
 import { AIChatView } from 'react-ai-chat-view';
+import type { AIChatResponse } from 'react-ai-chat-view';
 
 const SidePanel = () => {
   const systemPrompt = 'hello';
-  const fetchAIChatAPI = async () => {
-    return 'hello';
-  };
-  const handleGetSelectionButton = async (inputTextValue: string, setInputTextValue: (value: string) => void) => {
-    const res = await chrome.runtime.sendMessage({ type: 'getSelectedTextRequest' });
-    setInputTextValue('```\n' + res.response + '\n```\n');
+  const fetchAIChatAPI = async (): Promise<AIChatResponse> => {
+    return { content: 'hello', totalTokenCount: 1 };
   };
 
   return (
     <div>
-      <AIChatView {...{ systemPrompt, fetchAIChatAPI, handleGetSelectionButton }} />
+      <AIChatView {...{ systemPrompt, fetchAIChatAPI }} />
     </div>
   );
 };
