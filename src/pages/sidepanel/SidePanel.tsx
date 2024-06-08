@@ -2,17 +2,12 @@ import React from 'react';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 
-import {
-  // eslint-disable-next-line import/named
+import { AIChatView } from 'react-ai-chat-view';
+import type {
   AIChatResponse,
-  AIChatView,
-  // eslint-disable-next-line import/named
   AIModelData,
-  // eslint-disable-next-line import/named
   ChatContextType,
-  // eslint-disable-next-line import/named
   ChatFormButtonData,
-  // eslint-disable-next-line import/named
   SideButtonFuncResponse,
 } from 'react-ai-chat-view';
 import useStorage from '@root/src/shared/hooks/useStorage';
