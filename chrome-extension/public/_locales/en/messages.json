@@ -1,10 +1,10 @@
 {
   "extensionDescription": {
     "description": "Extension description",
-    "message": "Chrome extension boilerplate developed with Vite, React and Typescript"
+    "message": "AIを活用したChrome拡張機能。選択したテキスト、ページ全体、動画の翻訳文、スクリーンショットなどを元に、AIとのチャットを可能にします。"
   },
   "extensionName": {
     "description": "Extension name",
-    "message": "Chrome extension boilerplate"
+    "message": "Chrome AI Chat"
   }
 }
