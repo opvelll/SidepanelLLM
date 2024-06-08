@@ -1,38 +1,19 @@
 import '@src/Options.css';
-import { useStorageSuspense, withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
-import { exampleThemeStorage } from '@chrome-extension-boilerplate/storage';
-import { ComponentPropsWithoutRef } from 'react';
+import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
+import APISettingView from './components/APISettingView';
+import SystemPromptSettingView from './components/SystemPromptSettingView';
+import SideButtonSettingView from './components/SideButtonSettingView';
 
 const Options = () => {
-  const theme = useStorageSuspense(exampleThemeStorage);
-
   return (
-    <div
-      className="App-container"
-      style={{
-        backgroundColor: theme === 'light' ? '#eee' : '#222',
-      }}>
-      <img src={chrome.runtime.getURL('options/logo.svg')} className="App-logo" alt="logo" />
-      <span style={{ color: theme === 'light' ? '#0281dc' : undefined, marginBottom: '10px' }}>Options</span>
-      Edit <code>pages/options/src/Options.tsx</code> and save to reload.
-      <ToggleButton>Toggle theme</ToggleButton>
+    <div className="p-4 max-w-4xl mx-auto">
+      <div className="space-y-6 bg-white p-6 shadow-md rounded-md">
+        <h1 className="text-xl font-bold border-b pb-1">Option</h1>
+        <APISettingView />
+        <SystemPromptSettingView />
+        <SideButtonSettingView />
+      </div>
     </div>
-  );
-};
-
-const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const theme = useStorageSuspense(exampleThemeStorage);
-  return (
-    <button
-      className={
-        props.className +
-        ' ' +
-        'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-        (theme === 'light' ? 'bg-white text-black' : 'bg-black text-white')
-      }
-      onClick={exampleThemeStorage.toggle}>
-      {props.children}
-    </button>
   );
 };
 

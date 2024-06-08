@@ -1,4 +1,4 @@
-import { BaseStorage, createStorage, StorageType } from '@src/shared/storages/base';
+import { BaseStorage, createStorage, StorageType } from './base';
 import { SystemPrompt } from './SystemPrompt';
 
 type SystemPromptStorageType = BaseStorage<SystemPrompt> & {

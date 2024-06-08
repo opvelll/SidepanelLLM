@@ -1,4 +1,4 @@
-import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
+import { ReceivedMessage } from '../../../../types/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
 const getAllPageText = async (): Promise<ReceivedMessage> => {
@@ -9,14 +9,16 @@ const getAllPageText = async (): Promise<ReceivedMessage> => {
 
 const getMainText = () => {
   const mainElement = document.querySelector('main');
-  const bodyElement = document.querySelector('body');
-  if (!mainElement && !bodyElement) {
-    return '';
-  } else if (mainElement) {
-    return mainElement.textContent;
-  } else if (bodyElement) {
-    return bodyElement.textContent;
+  if (mainElement) {
+    return mainElement.textContent || '';
   }
+
+  const bodyElement = document.querySelector('body');
+  if (bodyElement) {
+    return bodyElement.textContent || '';
+  }
+
+  return '';
 };
 
 export default getAllPageText;

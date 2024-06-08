@@ -1,10 +1,9 @@
-import useStorage from '@root/src/shared/hooks/useStorage';
-import { cutoffAndCurrentDate, defaultSystemPrompt } from '@root/src/shared/storages/SystemPrompt';
-import SystemPromptStorage from '@root/src/shared/storages/SystemPromptStorage';
+import { useStorageSuspense } from '@chrome-extension-boilerplate/shared';
+import { cutoffAndCurrentDate, defaultSystemPrompt, SystemPromptStorage } from '@chrome-extension-boilerplate/storage';
 import { useState } from 'react';
 
 export default function SystemPromptSettingView() {
-  const { isIncludeCutoffAndCurrentDate } = useStorage(SystemPromptStorage);
+  const { isIncludeCutoffAndCurrentDate } = useStorageSuspense(SystemPromptStorage);
   const [inputValueSystemPrompt, setInputValueSystemPrompt] = useState('');
   const [isCheckIncludeCutoffAndCurrentDate, setIsCheckIncludeCutoffAndCurrentDate] =
     useState(isIncludeCutoffAndCurrentDate);

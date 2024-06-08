@@ -1,40 +1,27 @@
 import 'webextension-polyfill';
-import { exampleThemeStorage } from '@chrome-extension-boilerplate/storage';
-
-exampleThemeStorage.get().then(theme => {
-  console.log('theme', theme);
-});
-
-console.log('background loaded');
-console.log("Edit 'apps/chrome-extension/lib/background/index.ts' and save to reload.");
+import getYoutubeSubtitles from './lib/YoutubeSubtitleFetcher';
+import getAllPageText from './lib/WebPageTextExtractor';
+import sendSelectionText from './lib/TextSelectionSender';
+import { captureVisibleTab } from './lib/Capture';
+import { fetchAIChatAPI } from './lib/ChatAPI';
 
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
 
-chrome.runtime.onMessage.addListener((message, sender, sendResponse): boolean => {
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  //if (import.meta.env.MODE === 'development') console.log('message', message);
+
   if (message.type === 'getSelectedTextRequest') {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      if (!tabs[0].id) {
-        sendResponse({ response: 'error' });
-      } else {
-        chrome.scripting
-          .executeScript({
-            target: { tabId: tabs[0].id },
-            func: function getSelectedText() {
-              const selection = window.getSelection();
-              return selection ? selection.toString() : 'error';
-            },
-          })
-          .then(result => {
-            console.log('result', result);
-            sendResponse({ response: result[0].result });
-          })
-          .catch(e => {
-            console.error(e);
-            sendResponse({ response: 'error' });
-          });
-      }
-    });
-    return true;
+    sendSelectionText().then(result => sendResponse(result));
+  } else if (message.type === 'queryChatAPI') {
+    fetchAIChatAPI(message.model, message.context).then(result => sendResponse(result));
+  } else if (message.type === 'getAllPageRequest') {
+    getAllPageText().then(result => sendResponse(result));
+  } else if (message.type === 'getSubtitlesRequest') {
+    getYoutubeSubtitles().then(result => sendResponse(result));
+  } else if (message.type === 'getScreenshot') {
+    captureVisibleTab(sendResponse);
   }
   return true;
 });
+
+console.log('background loaded');

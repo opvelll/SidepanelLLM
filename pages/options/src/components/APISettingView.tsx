@@ -1,9 +1,9 @@
-import useStorage from '@root/src/shared/hooks/useStorage';
-import ApiKeyStorage from '@root/src/shared/storages/ApiKeyStorage';
+import { useStorageSuspense } from '@chrome-extension-boilerplate/shared';
+import { ApiKeyStorage } from '@chrome-extension-boilerplate/storage';
 import { useState } from 'react';
 
 export default function APISettingView() {
-  const { openAIKey, googleKey } = useStorage(ApiKeyStorage);
+  const { openAIKey, googleKey } = useStorageSuspense(ApiKeyStorage);
   const [inputValueOpenAI, setInputValueOpenAI] = useState(openAIKey);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inputValueGoogle, setInputValueGoogle] = useState(googleKey);

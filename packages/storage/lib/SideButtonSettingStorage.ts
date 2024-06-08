@@ -22,7 +22,7 @@ const storage = createStorage<SideButtonList>(
   },
 );
 
-const SideButtonSettingStorage: SideButtonSettingStorageType = {
+export const SideButtonSettingStorage: SideButtonSettingStorageType = {
   ...storage,
   setSideButtonByIndex: async (sideButton, index) => {
     await storage.set(keys => {
@@ -40,5 +40,3 @@ const SideButtonSettingStorage: SideButtonSettingStorageType = {
     });
   },
 };
-
-export default SideButtonSettingStorage;

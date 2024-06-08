@@ -27,6 +27,7 @@ const manifest = Object.assign(
     version: packageJson.version,
     description: '__MSG_extensionDescription__',
     permissions: ['storage', 'sidePanel', 'activeTab', 'scripting', 'tabs'].concat(sidePanelConfig.permissions),
+    host_permissions: ['<all_urls>'],
     options_page: 'options/index.html',
     background: {
       service_worker: 'background.iife.js',
@@ -40,34 +41,10 @@ const manifest = Object.assign(
       },
       default_title: 'Click to open Side Panel',
     },
-    chrome_url_overrides: {
-      newtab: 'newtab/index.html',
-    },
     icons: {
       48: 'icon-48_light.png',
       128: 'icon-128_light.png',
     },
-    content_scripts: [
-      {
-        matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-        js: ['content/index.iife.js'],
-      },
-      {
-        matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-        js: ['content-ui/index.iife.js'],
-      },
-      {
-        matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-        css: ['content.css'], // public folder
-      },
-    ],
-    devtools_page: 'devtools/index.html',
-    web_accessible_resources: [
-      {
-        resources: ['*.js', '*.css', '*.svg', 'icon-128.png', 'icon-34.png'],
-        matches: ['*://*/*'],
-      },
-    ],
   },
   !isFirefox && { side_panel: { ...sidePanelConfig.side_panel } },
 );

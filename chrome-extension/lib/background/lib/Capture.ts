@@ -1,7 +1,7 @@
-import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
+import { ReceivedMessage } from '../../../../types/MessageType';
 
 export const captureVisibleTab = (sendResponse: (response: ReceivedMessage) => void) => {
-  chrome.tabs.captureVisibleTab(null, { format: 'png' }, image => {
+  chrome.tabs.captureVisibleTab({ format: 'png' }, image => {
     if (!image) {
       sendResponse({ status: 'error', errorMessage: 'Failed to capture image' } as ReceivedMessage);
       return;

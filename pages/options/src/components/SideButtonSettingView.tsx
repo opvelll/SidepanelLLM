@@ -1,12 +1,13 @@
-import useStorage from '@root/src/shared/hooks/useStorage';
-import SideButtonSettingStorage, {
+import { useStorageSuspense } from '@chrome-extension-boilerplate/shared';
+import {
+  SideButtonSettingStorage,
   SideButtonData,
   SideButtonList,
-} from '@root/src/shared/storages/SideButtonSettingStorage';
+} from '@chrome-extension-boilerplate/storage';
 import { useState, Fragment } from 'react';
 
 export default function SideButtonSettingView() {
-  const sideButtonDataList = useStorage(SideButtonSettingStorage);
+  const sideButtonDataList = useStorageSuspense(SideButtonSettingStorage);
 
   const [sideButtonFormList, setSideButtonFormList] = useState<SideButtonList>(sideButtonDataList);
 

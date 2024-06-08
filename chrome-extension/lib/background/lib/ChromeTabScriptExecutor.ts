@@ -1,4 +1,4 @@
-import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
+import { ReceivedMessage } from '../../../../types/MessageType';
 
 const executeScript = async <t>(
   func: () => t,

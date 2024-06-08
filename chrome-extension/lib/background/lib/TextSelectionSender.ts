@@ -1,4 +1,4 @@
-import { ReceivedMessage } from '../../sidepanel/lib/MessageType';
+import { ReceivedMessage } from '../../../../types/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
 const sendSelectionText = async (): Promise<ReceivedMessage> => {
@@ -7,6 +7,9 @@ const sendSelectionText = async (): Promise<ReceivedMessage> => {
   });
 };
 
-const getSelectedText = () => window.getSelection().toString();
+const getSelectedText = () => {
+  const selection = window.getSelection();
+  return selection ? selection.toString() : '';
+};
 
 export default sendSelectionText;
