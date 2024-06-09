@@ -43,4 +43,7 @@ export default defineConfig({
       external: ['chrome'],
     },
   },
+  define: {
+    'import.meta.env.VITE_ENV': isDev ? `"development"` : `"production"`,
+  },
 });

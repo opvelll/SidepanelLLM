@@ -10,9 +10,11 @@
     "jsx": "react-jsx",
     "types": [
       "chrome"
-    ]
+    ],
+    "module": "esnext" 
   },
   "include": [
-    "src"
+    "src",
+    "env.d.ts"
   ]
 }

@@ -91,7 +91,8 @@ const handleRequestButton = async (
 ): Promise<SideButtonFuncResponse> => {
   const res: ReceivedMessage = await chrome.runtime.sendMessage({ type: requestType });
 
-  //if (import.meta.env.MODE === 'development') console.log('response sidepanel', res);
+  console.log("env", import.meta.env.VITE_ENV);
+  if (import.meta.env.VITE_ENV === 'development') console.log('response sidepanel', res);
 
   switch (res.status) {
     case 'error':

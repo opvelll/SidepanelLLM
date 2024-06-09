@@ -5,8 +5,9 @@
     "types": ["vite/client", "node", "chrome"],
     "paths": {
       "@root/*": ["./*"],
-      "@lib/*": ["lib/*"],
-    }
+      "@lib/*": ["lib/*"]
+    },
+    "module": "esnext"
   },
-  "include": ["lib", "utils", "vite.config.ts", "node_modules/@types"]
+  "include": ["lib", "utils", "vite.config.ts", "node_modules/@types", "env.d.ts"]
 }

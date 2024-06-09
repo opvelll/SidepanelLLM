@@ -29,5 +29,6 @@ export default defineConfig({
   },
   define: {
     'process.env.NODE_ENV': isDev ? `"development"` : `"production"`,
+    'import.meta.env.VITE_ENV': isDev ? `"development"` : `"production"`,
   },
 });
