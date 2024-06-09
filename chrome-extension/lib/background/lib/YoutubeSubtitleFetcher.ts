@@ -5,7 +5,7 @@ import { ReceivedMessage } from '../../../../types/MessageType';
 const getYoutubeSubtitles = async () => {
   return await executeScript(
     getVideoIdAndTitleFromUrl,
-    'YoutubeアドレスからvideoIDを取り出せませんでした。',
+    'アドレスからvideoIDを取り出せませんでした。',
     async ({ videoId, title }) => {
       try {
         let subtitles = [];
@@ -29,13 +29,16 @@ const getYoutubeSubtitles = async () => {
 
 const getVideoIdAndTitleFromUrl = (): { videoId: string; title: string } => {
   const videoId = new URLSearchParams(new URL(window.location.href).search).get('v');
+  if (!videoId) {
+    throw new Error('No videoId found in the URL.');
+  }
   const title = document.querySelector('title')?.textContent;
-  console.log(videoId, title);
+  //console.log(videoId, title);
   return { videoId: videoId || '', title: title || '' };
 };
 
 const concatenateSubtitles = (title: string, subtitles: { start: string; dur: string; text: string }[]): string => {
-  console.log(subtitles);
+  //console.log(subtitles);
   return 'title: ' + title + '\n\n' + subtitles.map(subtitle => subtitle.text).join('\n');
 };
 
