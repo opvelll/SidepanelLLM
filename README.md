@@ -1,9 +1,8 @@
 # Chrome Extension - Chrome AI Chat
 
-Chrome のサイドバーでAI Chatができるようになる拡張機能です。現在開発中α版。OpenAIのAPIのみ対応。
+Chrome のサイドバーでAI Chatができるようになる拡張機能です。現在OpenAIのAPIのみ対応。
 
-他にも似たような拡張機能もありますし、OpenAIもデスクトップ版など出していて、この拡張を作る意味もあまりないのですが、
-APIキー使用料金のみ支払いたいというのと、APIを直接触ってみたいので作成しました。
+どういうプロンプトを入れているかわかりやすいほうが好みなので作りました。
 
 ![alt text](doc/sidepanel1.gif) 
 ドラッグ選択した文章をフォームに差し込んで会話できます。
@@ -14,7 +13,7 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 ![alt text](doc/sidepanel3.gif)
 画像をドラッグアンドドロップで、画像を使って会話できます。
 
-他にも、画面のスクリーンショットを撮る機能、定型プロンプトをボタンで差し込むことができます。
+また他にも画面のスクリーンショットを撮る機能、プロンプトをボタンで差し込む機能があります。
 
 ### 使うのに必要なもの
 
@@ -37,7 +36,7 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 
 等々
 
-### 使用ライブラリ
+### 使用ボイラープレート ありがとう
 Chrome Extension Boilerplate with
 React + Vite + TypeScript 
 https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
