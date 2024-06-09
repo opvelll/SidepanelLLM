@@ -15,9 +15,11 @@ const getMainText = () => {
 
   const bodyElement = document.querySelector('body');
   if (bodyElement) {
-    return bodyElement.textContent || '';
+    const clonedBody = bodyElement.cloneNode(true) as HTMLElement;
+    const scriptElements = clonedBody.querySelectorAll('script');
+    scriptElements.forEach(script => script.remove());
+    return clonedBody.textContent || '';
   }
-
   return '';
 };
 
