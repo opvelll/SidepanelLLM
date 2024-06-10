@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
+  "name": "chrome-ai-chat",
   "version": "0.7.1",
-  "description": "chrome extension boilerplate",
+  "description": "AI-powered Chrome extension. Enables users to chat with AI based on selected text, entire pages, translated text from videos, screenshots, etc.",
   "license": "MIT",
   "repository": {
     "type": "git",
