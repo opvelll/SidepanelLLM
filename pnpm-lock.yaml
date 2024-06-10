@@ -41,7 +41,7 @@ importers:
         version: 6.21.0(eslint@8.56.0)(typescript@5.2.2)
       '@vitejs/plugin-react-swc':
         specifier: ^3.6.0
-        version: 3.6.0(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
+        version: 3.6.0(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -97,8 +97,8 @@ importers:
         specifier: 5.2.2
         version: 5.2.2
       vite:
-        specifier: ^5.2.11
-        version: 5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
+        specifier: ^5.2.13
+        version: 5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
 
   chrome-extension:
     dependencies:
@@ -333,7 +333,7 @@ importers:
         version: link:../../packages/storage
       react-ai-chat-view:
         specifier: 0.7.6-alpha.0
-        version: 0.7.6-alpha.0(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
+        version: 0.7.6-alpha.0(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
     devDependencies:
       '@chrome-extension-boilerplate/hmr':
         specifier: workspace:*
@@ -656,6 +656,7 @@ packages:
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -663,6 +664,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -1812,6 +1814,7 @@ packages:
 
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
+    deprecated: Glob versions prior to v9 are no longer supported
 
   globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
@@ -1906,6 +1909,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -3075,8 +3079,8 @@ packages:
     peerDependencies:
       vite: '>2.0.0-0'
 
-  vite@5.2.11:
-    resolution: {integrity: sha512-HndV31LWW05i1BLPMUCE1B9E9GFbOu1MbenhS58FuK6owSO5qHm7GiCotrNY1YE5rMeQSFBGmT5ZaLEjFizgiQ==}
+  vite@5.2.13:
+    resolution: {integrity: sha512-SSq1noJfY9pR3I1TUENL3rQYDQCFqgD+lM6fTRAM8Nv6Lsg5hDLaXkjETVeBt+7vZBCMoibD+6IWnT2mJ+Zb/A==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -3791,10 +3795,10 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-react-swc@3.6.0(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))':
+  '@vitejs/plugin-react-swc@3.6.0(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))':
     dependencies:
       '@swc/core': 1.5.7
-      vite: 5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
+      vite: 5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -5607,7 +5611,7 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  react-ai-chat-view@0.7.6-alpha.0(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)):
+  react-ai-chat-view@0.7.6-alpha.0(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)):
     dependencies:
       '@types/react-syntax-highlighter': 15.5.13
       react: 18.2.0
@@ -5616,7 +5620,7 @@ snapshots:
       react-markdown: 9.0.1(@types/react@18.3.2)(react@18.2.0)
       react-syntax-highlighter: 15.5.0(react@18.2.0)
       react-toastify: 10.0.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      vite-plugin-css-injected-by-js: 3.5.1(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
+      vite-plugin-css-injected-by-js: 3.5.1(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0))
       zustand: 4.5.2(@types/react@18.3.2)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
@@ -6258,11 +6262,11 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite-plugin-css-injected-by-js@3.5.1(vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)):
+  vite-plugin-css-injected-by-js@3.5.1(vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)):
     dependencies:
-      vite: 5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
+      vite: 5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0)
 
-  vite@5.2.11(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0):
+  vite@5.2.13(@types/node@20.12.12)(sass@1.74.1)(terser@5.31.0):
     dependencies:
       esbuild: 0.20.2
       postcss: 8.4.38
