@@ -1,7 +1,7 @@
 {
-  "name": "chrome-ai-chat",
-  "version": "0.7.1",
-  "description": "AI-powered Chrome extension. Enables users to chat with AI based on selected text, entire pages, translated text from videos, screenshots, etc.",
+  "name": "sidepanel-llm",
+  "version": "0.8.0",
+  "description": "Chrome extension that allows you to chat with ChatGPT API directly from the side panel.",
   "license": "MIT",
   "repository": {
     "type": "git",

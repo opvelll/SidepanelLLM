@@ -1,6 +1,6 @@
 [日本語](#日本語) | [English](#english)
 #### english
-# Chrome Extension - Chrome AI Chat
+# Chrome Extension - SidepanelLLM
 
 A Chrome extension that allows you to use AI Chat in the Chrome sidepanel. Currently, it only supports the OpenAI API.
 
@@ -66,7 +66,7 @@ From the left, the buttons allow you to insert the selected text, subtitle infor
 
 
 #### 日本語
-# Chrome Extension - Chrome AI Chat
+# Chrome Extension - SidepanelLLM
 
 Chrome のサイドバーでAI Chatができるようになる拡張機能です。現在OpenAIのAPIのみ対応。
 
@@ -114,12 +114,15 @@ https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
 
 ## 使い方
 
-1. 拡張機能をいれる
+1. githubの[release](https://github.com/opvelll/Chrome-AI-Chat/releases/tag/v0.7.1-alpha.1)からzipファイルをダウンロード、解凍。
 
-2. 拡張のボタンを右クリック、オプションを開く
+2. Chromeを立ち上げ、拡張機能を管理へ、パッケージ化されていない拡張機能を読み込むで解凍先ファルダを指名。
+
+3. インストールされた後、右上拡張のボタンを右クリック、オプションを開く
+
 ![option](doc/option_view.png)
 
-3. オプションのAPI KeyにOpen AIで発行したAPIキーを設定する。キーの盗難に備え、APIキーには上限を設定することをお勧めします。
+4. オプションのAPI KeyにOpen AIで発行したAPIキーを設定する。キーの盗難に備え、APIキーには上限を設定することをお勧めします。
 
 
 ## 画面のボタン

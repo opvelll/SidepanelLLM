@@ -1,10 +1,10 @@
 {
   "extensionDescription": {
     "description": "Extension description",
-    "message": "AIを活用したChrome拡張機能。選択したテキスト、ページ全体、動画の翻訳文、スクリーンショットなどを元に、AIとのチャットを可能にします。"
+    "message": "A powerful Chrome extension that allows you to chat with ChatGPT API directly from the side panel."
   },
   "extensionName": {
     "description": "Extension name",
-    "message": "Chrome AI Chat"
+    "message": "SidepanelLLM"
   }
 }
