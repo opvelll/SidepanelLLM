@@ -6,15 +6,15 @@ A Chrome extension that allows you to use AI Chat in the Chrome sidepanel. Curre
 
 I made this because I prefer knowing what prompts are being used.
 
-![alt text](doc/sidepanel1.gif) 
+![Paste Selected Text](doc/sidepanel1.gif) 
 
 You can insert selected text into the form and chat with it.
 
-![alt text](doc/sidepanel2.gif) 
+![Youtube Subtitles](doc/sidepanel2.gif) 
 
 When you open a YouTube video page and press the button, you can use the subtitle information of the video to chat. This is useful for understanding the summary of the video.
 
-![alt text](doc/sidepanel3.gif)
+![Images](doc/sidepanel3.gif)
 
 You can drag and drop images to chat using the images.
 
@@ -42,19 +42,19 @@ There are also features to take screenshots of the screen and insert prompts wit
 and more...
 
 ### Boilerplate Used - Thanks
-Chrome Extension Boilerplate with
-React + Vite + TypeScript 
-https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
+[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react)
 
 ## Usage
 
-1. Install the extension
+1. Download the zip file from the [release](https://github.com/opvelll/Chrome-AI-Chat/releases/tag/v0.7.1-alpha.1) on GitHub, and unzip it.
 
-2. Right-click the extension button and open the options
+2. Launch Chrome, go to manage extensions, and load the unpacked extension by selecting the unzipped folder.
+
+3. After installation, right-click the extension button in the top right corner and open options.
 
 ![option](doc/option_view.png)
 
-3. Set the API key issued by OpenAI in the API Key field in the options. To prevent key theft, it is recommended to set a limit on the API key.
+4. Set the API key issued by OpenAI in the API Key field in the options. To prevent key theft, it is recommended to set a limit on the API key.
 
 ## Screen Buttons
 
@@ -64,6 +64,9 @@ You can chat from the form at the bottom of the screen.
 When you press the buttons above the form, you can embed information from the currently open tab into the form.
 From the left, the buttons allow you to insert the selected text, subtitle information from YouTube videos, all text information from the page, and a screenshot of the screen.
 
+## License
+
+[LICENSE.md](LICENSE.md)
 
 #### 日本語
 # Chrome Extension - SidepanelLLM
@@ -108,9 +111,7 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 等々
 
 ### 使用ボイラープレート ありがとう
-Chrome Extension Boilerplate with
-React + Vite + TypeScript 
-https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
+[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
 
 ## 使い方
 
@@ -133,3 +134,6 @@ https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
 フォーム上部のボタンを押すと、現在開いているタブから情報をフォームに埋め込むことができます。
 ボタンは左から、選択部分、Youtube動画の字幕情報、ページ全体のテキスト情報、スクリーンショットを取得できます。
 
+## License
+
+[LICENSE.md](LICENSE.md)
