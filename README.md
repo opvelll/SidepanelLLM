@@ -46,7 +46,7 @@ and more...
 
 ## Usage
 
-1. Download the zip file from the [release](https://github.com/opvelll/Chrome-AI-Chat/releases/tag/v0.7.1-alpha.1) on GitHub, and unzip it.
+1. Download the dist.zip file from the [release](https://github.com/opvelll/SidepanelLLM/releases/tag/v0.8.0-alpha.2) on GitHub, and unzip it.
 
 2. Launch Chrome, go to manage extensions, and load the unpacked extension by selecting the unzipped folder.
 
@@ -115,7 +115,7 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 
 ## 使い方
 
-1. githubの[release](https://github.com/opvelll/Chrome-AI-Chat/releases/tag/v0.7.1-alpha.1)からzipファイルをダウンロード、解凍。
+1. githubの[release](https://github.com/opvelll/SidepanelLLM/releases/tag/v0.8.0-alpha.2)からdist.zipファイルをダウンロード、解凍。
 
 2. Chromeを立ち上げ、拡張機能を管理へ、パッケージ化されていない拡張機能を読み込むで解凍先ファルダを指名。
 
