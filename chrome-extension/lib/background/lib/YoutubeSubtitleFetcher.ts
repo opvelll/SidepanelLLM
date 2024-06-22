@@ -1,6 +1,6 @@
 import { getSubtitles } from 'youtube-caption-extractor';
 import executeScript from './ChromeTabScriptExecutor';
-import { ReceivedMessage } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../types/MessageType';
 
 const getYoutubeSubtitles = async () => {
   return await executeScript(
@@ -14,10 +14,10 @@ const getYoutubeSubtitles = async () => {
           subtitles = await getSubtitles({ videoID: videoId, lang: 'ja' });
         }
         if (subtitles.length === 0) {
-          return { status: 'error', errorMessage: 'No subtitles found in en and ja.' } as ReceivedMessage;
+          return { status: 'error', errorMessage: 'No subtitles found in en and ja.' } as MessageFromBackground;
         }
         const concatenatedSubtitles = concatenateSubtitles(title, subtitles);
-        return { status: 'success', response: concatenatedSubtitles } as ReceivedMessage;
+        return { status: 'success', response: concatenatedSubtitles } as MessageFromBackground;
       } catch (e) {
         console.error(e);
         const error = e instanceof Error ? e : new Error('Unknown error');

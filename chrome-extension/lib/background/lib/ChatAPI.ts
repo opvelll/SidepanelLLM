@@ -1,12 +1,12 @@
 import { ChatCompletion, ChatCompletionMessageParam } from 'openai/resources';
-import { ReceivedMessage } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../types/MessageType';
 import { ApiKeyStorage } from '@chrome-extension-boilerplate/storage';
 import OpenAI from 'openai';
 
 export const fetchAIChatAPI = async (
   model: string,
   context: ChatCompletionMessageParam[],
-): Promise<ReceivedMessage> => {
+): Promise<MessageFromBackground> => {
   try {
     // 毎度、APIキーを取得して、new OpenAI() で初期化している
     const { openAIKey } = await ApiKeyStorage.get();

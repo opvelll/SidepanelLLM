@@ -1,10 +1,14 @@
-import { ReceivedMessage } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../types/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
-const sendSelectionText = async (): Promise<ReceivedMessage> => {
-  return await executeScript(getSelectedText, 'No Selected Text.', async (result: string): Promise<ReceivedMessage> => {
-    return { status: 'success', response: result } as ReceivedMessage;
-  });
+const sendSelectionText = async (): Promise<MessageFromBackground> => {
+  return await executeScript(
+    getSelectedText,
+    'No Selected Text.',
+    async (result: string): Promise<MessageFromBackground> => {
+      return { status: 'success', response: result } as MessageFromBackground;
+    },
+  );
 };
 
 const getSelectedText = () => {

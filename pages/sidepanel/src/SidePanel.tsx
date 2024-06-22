@@ -6,7 +6,7 @@ import {
 import { SystemPromptStorage, SideButtonSettingStorage, SideButtonData, createPrompt } from '@chrome-extension-boilerplate/storage';
 import { AIChatView } from 'react-ai-chat-view';
 import type { AIChatResponse, AIModelData, ChatContextType, ChatFormButtonData, SideButtonFuncResponse } from 'react-ai-chat-view';
-import { CautionMessage, GetTextRequest, ReceivedMessage, SuccessMessage } from './lib/MessageType';
+import { BackgroundSuccessMessage, BackgroundCautionMessage, MessageFromBackground, GetTextRequestType } from '../../../types/MessageType';
 import { MdOutlineSubtitles, MdScreenshotMonitor } from 'react-icons/md';
 import { SiPagekit } from 'react-icons/si';
 import { FaRegCopy } from 'react-icons/fa';
@@ -16,7 +16,7 @@ const SidePanel = () => {
   const sideButtonList = useStorageSuspense(SideButtonSettingStorage);
 
   const fetchAIChatAPI = async (modelData: AIModelData, context: ChatContextType): Promise<AIChatResponse> => {
-    const res: ReceivedMessage = await chrome.runtime.sendMessage({
+    const res: MessageFromBackground = await chrome.runtime.sendMessage({
       type: 'queryChatAPI',
       model: modelData.modelName,
       context: context,
@@ -83,13 +83,13 @@ const SidePanel = () => {
 };
 
 const handleRequestButton = async (
-  requestType: GetTextRequest,
+  requestType: GetTextRequestType,
   formatString: string,
   inputTextValue: string,
   images: string[],
   showCaution: (value: string) => void,
 ): Promise<SideButtonFuncResponse> => {
-  const res: ReceivedMessage = await chrome.runtime.sendMessage({ type: requestType });
+  const res: MessageFromBackground = await chrome.runtime.sendMessage({ type: requestType });
 
   if (import.meta.env.VITE_ENV === 'development') console.log('response sidepanel', res);
 
@@ -97,7 +97,7 @@ const handleRequestButton = async (
     case 'error':
       throw new Error(res.errorMessage);
     case 'caution':
-      showCaution(res.caution);
+      showCaution(res.cautionMessage);
       return createReturnType(inputTextValue, images, formatString, res);
     case 'success':
       return createReturnType(inputTextValue, images, formatString, res);
@@ -108,7 +108,7 @@ const createReturnType = (
   inputTextValue: string,
   images: string[],
   formatString: string,
-  res: SuccessMessage | CautionMessage,
+  res: BackgroundSuccessMessage | BackgroundCautionMessage,
 ): SideButtonFuncResponse => {
   const newText = res.response ? formatResponse(inputTextValue, formatString, res.response) : inputTextValue;
   const newImages = res.image_url ? [...images, res.image_url] : images;

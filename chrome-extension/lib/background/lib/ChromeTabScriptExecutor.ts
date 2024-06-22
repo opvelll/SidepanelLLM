@@ -1,10 +1,10 @@
-import { ReceivedMessage } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../types/MessageType';
 
 const executeScript = async <t>(
   func: () => t,
   funcErrorMessage: string,
-  func2: (result: t) => Promise<ReceivedMessage>,
-): Promise<ReceivedMessage> => {
+  func2: (result: t) => Promise<MessageFromBackground>,
+): Promise<MessageFromBackground> => {
   try {
     const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tabs[0].id) {

@@ -1,29 +1,33 @@
-export type ReceivedMessage = SuccessMessage | ErrorMessage | CautionMessage;
+export type MessageToBackground = {
+  type: GetTextRequestType;
+};
 
-export type SuccessMessage = {
+export type GetTextRequestType =
+  | 'getSelectedTextRequest'
+  | 'getSubtitlesRequest'
+  | 'getAllPageRequest'
+  | 'getScreenshot';
+
+export type MessageFromBackground = BackgroundSuccessMessage | BackgroundErrorMessage | BackgroundCautionMessage;
+
+export type BackgroundSuccessMessage = {
   status: 'success';
-} & ResponseMessage;
+} & BackgroundResponseMessage;
 
-export type ErrorMessage = {
+export type BackgroundErrorMessage = {
   status: 'error';
   errorMessage: string;
 };
 
-export type CautionMessage = {
+export type BackgroundCautionMessage = {
   status: 'caution';
-  caution: string;
-} & ResponseMessage;
+  cautionMessage: string;
+} & BackgroundResponseMessage;
 
 export type Status = 'success' | 'error' | 'caution';
-export type ResponseMessage = {
+export type BackgroundResponseMessage = {
   response: string;
   image_url?: string;
   completion_tokens?: number;
   total_tokens?: number;
-};
-
-export type GetTextRequest = 'getSelectedTextRequest' | 'getSubtitlesRequest' | 'getAllPageRequest' | 'getScreenshot';
-
-export type SentMessage = {
-  type: GetTextRequest;
 };

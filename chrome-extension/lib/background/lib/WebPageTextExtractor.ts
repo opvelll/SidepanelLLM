@@ -1,9 +1,9 @@
-import { ReceivedMessage } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../types/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
-const getAllPageText = async (): Promise<ReceivedMessage> => {
+const getAllPageText = async (): Promise<MessageFromBackground> => {
   return await executeScript(getMainText, 'ページから文章を取り出せませんでした。', async result => {
-    return { status: 'success', response: result } as ReceivedMessage;
+    return { status: 'success', response: result } as MessageFromBackground;
   });
 };
 
