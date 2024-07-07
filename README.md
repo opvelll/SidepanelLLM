@@ -41,9 +41,6 @@ There are also features to take screenshots of the screen and insert prompts wit
 
 and more...
 
-### Boilerplate Used - Thanks
-[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react)
-
 ## Usage
 
 1. Download the dist.zip file from the [release](https://github.com/opvelll/SidepanelLLM/releases/tag/v0.8.0-alpha.2) on GitHub, and unzip it.
@@ -63,6 +60,9 @@ and more...
 You can chat from the form at the bottom of the screen.
 When you press the buttons above the form, you can embed information from the currently open tab into the form.
 From the left, the buttons allow you to insert the selected text, subtitle information from YouTube videos, all text information from the page, and a screenshot of the screen.
+
+### Boilerplate Used
+[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react)
 
 ## License
 
@@ -110,9 +110,6 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 
 等々
 
-### 使用ボイラープレート ありがとう
-[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
-
 ## 使い方
 
 1. githubの[release](https://github.com/opvelll/SidepanelLLM/releases/tag/v0.8.0-alpha.2)からdist.zipファイルをダウンロード、解凍。
@@ -133,6 +130,11 @@ Youtubeの動画ページを開いてボタンを押すと、動画の字幕情�
 画面下のフォームからチャットができます。
 フォーム上部のボタンを押すと、現在開いているタブから情報をフォームに埋め込むことができます。
 ボタンは左から、選択部分、Youtube動画の字幕情報、ページ全体のテキスト情報、スクリーンショットを取得できます。
+
+### 使用ボイラープレート
+[Chrome Extension Boilerplate with React + Vite + TypeScript](https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite)
+
+ありがとう助かりました。
 
 ## License
 
