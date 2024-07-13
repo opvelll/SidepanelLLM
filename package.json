@@ -1,6 +1,6 @@
 {
   "name": "sidepanel-llm",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Chrome extension that allows you to chat with ChatGPT API directly from the side panel.",
   "license": "MIT",
   "repository": {
