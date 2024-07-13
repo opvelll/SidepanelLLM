@@ -5,6 +5,7 @@ export type APIKeySettings = { openAIKey: string; googleKey: string };
 type ApiKeyStorageType = BaseStorage<APIKeySettings> & {
   setOpenAIKey: (key: string) => Promise<void>;
   getKeys: () => Promise<APIKeySettings>;
+  isSetKey: (keys: APIKeySettings) => boolean;
 };
 
 const storage = createStorage<APIKeySettings>(
@@ -25,6 +26,9 @@ const ApiKeyStorage: ApiKeyStorageType = {
   },
   getKeys: async () => {
     return storage.get();
+  },
+  isSetKey: (keys: APIKeySettings) => {
+    return Object.values(keys).some(key => key !== '');
   },
 };
 
