@@ -1,4 +1,4 @@
-import { MessageFromBackground } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../pages/sidepanel/src/types/MessageType';
 
 const executeScript = async <t>(
   func: () => t,

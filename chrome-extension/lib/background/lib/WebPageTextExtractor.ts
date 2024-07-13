@@ -1,4 +1,4 @@
-import { MessageFromBackground } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../pages/sidepanel/src/types/MessageType';
 import executeScript from './ChromeTabScriptExecutor';
 
 const getAllPageText = async (): Promise<MessageFromBackground> => {

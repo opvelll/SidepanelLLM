@@ -1,6 +1,6 @@
 import { getSubtitles } from 'youtube-caption-extractor';
 import executeScript from './ChromeTabScriptExecutor';
-import { MessageFromBackground } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../pages/sidepanel/src/types/MessageType';
 
 const getYoutubeSubtitles = async () => {
   return await executeScript(

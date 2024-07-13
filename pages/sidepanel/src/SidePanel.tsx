@@ -6,7 +6,7 @@ import {
 import { SystemPromptStorage, SideButtonSettingStorage, SideButtonData, createPrompt } from '@chrome-extension-boilerplate/storage';
 import { AIChatView } from 'react-ai-chat-view';
 import type { AIChatResponse, AIModelData, ChatContextType, ChatFormButtonData, SideButtonFuncResponse } from 'react-ai-chat-view';
-import { BackgroundSuccessMessage, BackgroundCautionMessage, MessageFromBackground, GetTextRequestType } from '../../../types/MessageType';
+import { BackgroundSuccessMessage, BackgroundCautionMessage, MessageFromBackground, GetTextRequestType, ChatResponse } from './types/MessageType';
 import { MdOutlineSubtitles, MdScreenshotMonitor } from 'react-icons/md';
 import { SiPagekit } from 'react-icons/si';
 import { FaRegCopy } from 'react-icons/fa';
@@ -16,7 +16,7 @@ const SidePanel = () => {
   const sideButtonList = useStorageSuspense(SideButtonSettingStorage);
 
   const fetchAIChatAPI = async (modelData: AIModelData, context: ChatContextType): Promise<AIChatResponse> => {
-    const res: MessageFromBackground = await chrome.runtime.sendMessage({
+    const res: ChatResponse = await chrome.runtime.sendMessage({
       type: 'queryChatAPI',
       model: modelData.modelName,
       context: context,

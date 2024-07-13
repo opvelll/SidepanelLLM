@@ -1,4 +1,4 @@
-import { MessageFromBackground } from '../../../../types/MessageType';
+import { MessageFromBackground } from '../../../../pages/sidepanel/src/types/MessageType';
 
 export const captureVisibleTab = (sendResponse: (response: MessageFromBackground) => void) => {
   chrome.tabs.captureVisibleTab({ format: 'png' }, image => {
