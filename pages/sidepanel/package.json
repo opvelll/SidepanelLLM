@@ -20,7 +20,7 @@
   "dependencies": {
     "@chrome-extension-boilerplate/shared": "workspace:*",
     "@chrome-extension-boilerplate/storage": "workspace:*",
-    "react-ai-chat-view": "0.8.1-alpha.3"
+    "react-ai-chat-view": "0.9.0-alpha.4"
   },
   "devDependencies": {
     "@chrome-extension-boilerplate/hmr": "workspace:*",
