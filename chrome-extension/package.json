@@ -19,8 +19,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@chrome-extension-boilerplate/shared": "workspace:*",
-    "@chrome-extension-boilerplate/storage": "workspace:*",
     "youtube-caption-extractor": "^1.4.3",
     "youtube-captions-scraper": "^2.0.3",
     "@extension/env": "workspace:*",
