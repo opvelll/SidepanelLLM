@@ -1,17 +1,11 @@
 {
-  "extends": "@chrome-extension-boilerplate/tsconfig/base",
+  "extends": "@extension/tsconfig/base",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@lib/*": [
-        "lib/*"
-      ]
+      "@src/*": ["src/*"]
     },
-    "types": [
-      "chrome"
-    ]
+    "types": ["chrome", "node"]
   },
-  "include": [
-    "lib"
-  ]
+  "include": ["src", "build.mts"]
 }

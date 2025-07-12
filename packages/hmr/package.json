@@ -1,35 +1,36 @@
 {
-  "name": "@chrome-extension-boilerplate/hmr",
-  "version": "0.0.1",
-  "description": "chrome extension hot module reload or refresh",
+  "name": "@extension/hmr",
+  "version": "0.5.0",
+  "description": "chrome extension - hot module reload/refresh",
+  "type": "module",
   "private": true,
   "sideEffects": true,
   "files": [
     "dist/**"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "index.mts",
+  "main": "dist/index.mjs",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./build && rimraf .turbo",
-    "build:tsc": "tsc -b tsconfig.build.json",
-    "build:rollup": "rollup --config rollup.config.mjs",
-    "build": "pnpm run build:tsc && pnpm run build:rollup",
-    "dev-server": "node dist/lib/initReloadServer.js",
-    "lint": "eslint . --ext .ts,.tsx",
+    "clean:bundle": "rimraf dist && pnpx rimraf build",
+    "clean:node_modules": "pnpx rimraf node_modules",
+    "clean:turbo": "rimraf .turbo",
+    "clean": "pnpm clean:bundle && pnpm clean:node_modules && pnpm clean:turbo",
+    "ready": "tsc -b && rollup --config dist/rollup.config.js",
+    "dev": "tsx lib/initializers/init-reload-server.ts",
+    "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
-    "prettier": "prettier . --write",
+    "format": "prettier . --write --ignore-path ../../.prettierignore",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {
-    "ws": "8.17.0"
-  },
   "devDependencies": {
-    "@chrome-extension-boilerplate/tsconfig": "workspace:*",
+    "@extension/env": "workspace:*",
+    "@extension/tsconfig": "workspace:*",
     "@rollup/plugin-sucrase": "^5.0.2",
-    "@types/ws": "^8.5.10",
+    "@types/ws": "^8.18.1",
+    "esbuild": "^0.25.4",
     "esm": "^3.2.25",
-    "rollup": "^4.17.2",
-    "ts-node": "^10.9.2"
+    "rollup": "^4.41.0",
+    "ts-node": "^10.9.2",
+    "ws": "^8.18.2"
   }
 }

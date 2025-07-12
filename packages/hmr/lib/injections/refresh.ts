@@ -1,11 +1,10 @@
-import initClient from '../initClient';
+import initClient from '../initializers/init-client.js';
 
-function addRefresh() {
+(() => {
   let pendingReload = false;
 
   initClient({
-    // eslint-disable-next-line
-    // @ts-ignore
+    // @ts-expect-error That's because of the dynamic code loading
     id: __HMR_ID,
     onUpdate: () => {
       // disable reload when tab is hidden
@@ -18,16 +17,17 @@ function addRefresh() {
   });
 
   // reload
-  function reload(): void {
+  const reload = (): void => {
     pendingReload = false;
     window.location.reload();
-  }
+  };
 
   // reload when tab is visible
-  function reloadWhenTabIsVisible(): void {
-    !document.hidden && pendingReload && reload();
-  }
-  document.addEventListener('visibilitychange', reloadWhenTabIsVisible);
-}
+  const reloadWhenTabIsVisible = (): void => {
+    if (!document.hidden && pendingReload) {
+      reload();
+    }
+  };
 
-addRefresh();
+  document.addEventListener('visibilitychange', reloadWhenTabIsVisible);
+})();

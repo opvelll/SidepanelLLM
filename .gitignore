@@ -7,9 +7,13 @@
 # build
 **/dist
 **/build
+**/dist-zip
+chrome-extension/manifest.js
+chrome-extension/pre-build.tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # env
-**/.env.local
+**/.env.*
 **/.env
 
 # etc
@@ -18,6 +22,4 @@
 **/.turbo
 
 # compiled
-apps/chrome-extension/public/manifest.json
-
-.env
+**/tailwind-output.css

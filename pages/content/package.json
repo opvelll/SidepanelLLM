@@ -1,27 +1,33 @@
 {
-  "name": "@chrome-extension-boilerplate/content-script",
-  "version": "0.0.1",
-  "description": "chrome extension content script",
+  "name": "@extension/content-script",
+  "version": "0.5.0",
+  "description": "chrome extension - content script",
+  "type": "module",
   "private": true,
   "sideEffects": true,
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "clean": "rimraf ./dist && rimraf .turbo",
-    "build:watch": "cross-env __DEV__=true vite build -w --mode development",
-    "dev": "pnpm build:watch",
-    "lint": "eslint . --ext .ts,.tsx",
+    "clean:bundle": "rimraf dist",
+    "clean:node_modules": "pnpx rimraf node_modules",
+    "clean:turbo": "rimraf .turbo",
+    "clean": "pnpm clean:bundle && pnpm clean:turbo && pnpm clean:node_modules",
+    "build": "tsx build.mts",
+    "dev": "tsx build.mts",
+    "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
-    "prettier": "prettier . --write",
+    "format": "prettier . --write --ignore-path ../../.prettierignore",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@chrome-extension-boilerplate/shared": "workspace:*",
-    "@chrome-extension-boilerplate/storage": "workspace:*"
+    "@extension/shared": "workspace:*",
+    "@extension/storage": "workspace:*",
+    "@extension/env": "workspace:*"
   },
   "devDependencies": {
-    "@chrome-extension-boilerplate/tsconfig": "workspace:*",
-    "@chrome-extension-boilerplate/hmr": "workspace:*"
+    "@extension/hmr": "workspace:*",
+    "@extension/tsconfig": "workspace:*",
+    "@extension/vite-config": "workspace:*"
   }
 }

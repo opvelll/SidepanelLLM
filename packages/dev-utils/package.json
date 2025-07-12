@@ -1,25 +1,29 @@
 {
-  "name": "@chrome-extension-boilerplate/dev-utils",
-  "version": "0.0.1",
-  "description": "chrome extension dev utils",
+  "name": "@extension/dev-utils",
+  "version": "0.5.0",
+  "description": "chrome extension - dev utils",
+  "type": "module",
   "private": true,
   "sideEffects": false,
   "files": [
     "dist/**"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "index.mts",
+  "main": "dist/index.mjs",
   "scripts": {
-    "clean": "rimraf ./dist && rimraf ./build && rimraf .turbo",
-    "build": "pnpm run clean && tsc",
-    "lint": "eslint . --ext .ts,.tsx",
+    "clean:bundle": "rimraf dist",
+    "clean:node_modules": "pnpx rimraf node_modules",
+    "clean:turbo": "rimraf .turbo",
+    "clean": "pnpm clean:bundle && pnpm clean:node_modules && pnpm clean:turbo",
+    "ready": "tsc -b",
+    "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
-    "prettier": "prettier . --write",
-    "type-check": "tsc --noEmit"
+    "format": "prettier . --write --ignore-path ../../.prettierignore",
+    "type-check": "tsc --noEmit",
+    "postinstall": "pnpm ready"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@chrome-extension-boilerplate/tsconfig": "workspace:*"
+    "@extension/tsconfig": "workspace:*",
+    "@extension/shared": "workspace:*"
   }
 }

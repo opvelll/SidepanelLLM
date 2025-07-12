@@ -1,18 +1,13 @@
-import initClient from '../initClient';
+import initClient from '../initializers/init-client.js';
 
-function addReload() {
+(() => {
   const reload = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     chrome.runtime.reload();
   };
 
   initClient({
-    // eslint-disable-next-line
-    // @ts-ignore
+    // @ts-expect-error That's because of the dynamic code loading
     id: __HMR_ID,
     onUpdate: reload,
   });
-}
-
-addReload();
+})();

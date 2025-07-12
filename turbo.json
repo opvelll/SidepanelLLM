@@ -1,14 +1,27 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "ui": "tui",
+  "globalEnv": ["CEB_*", "CLI_CEB_*"],
+  "globalDependencies": [".env"],
+  "concurrency": "12",
+  "tasks": {
+    "ready": {
+      "dependsOn": ["^ready"],
+      "outputs": ["../../dist/**", "dist/**"],
+      "cache": false
+    },
     "dev": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", "build/**"],
+      "dependsOn": ["ready"],
+      "outputs": ["../../dist/**", "dist/**"],
+      "cache": false,
       "persistent": true
     },
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["../../dist/**", "dist/**", "build/**"],
+      "dependsOn": ["ready", "^build"],
+      "outputs": ["../../dist/**", "dist/**"],
+      "cache": false
+    },
+    "e2e": {
       "cache": false
     },
     "type-check": {
@@ -20,14 +33,24 @@
     "lint:fix": {
       "cache": false
     },
-    "prettier": {
+    "format": {
+      "dependsOn": ["^format"],
       "cache": false
     },
-    "test": {
-      "dependsOn": ["^test", "^build"],
+    "clean:node_modules": {
+      "dependsOn": ["^clean:node_modules"],
+      "cache": false
+    },
+    "clean:turbo": {
+      "dependsOn": ["^clean:turbo"],
+      "cache": false
+    },
+    "clean:bundle": {
+      "dependsOn": ["^clean:bundle"],
       "cache": false
     },
     "clean": {
+      "dependsOn": ["^clean"],
       "cache": false
     }
   }

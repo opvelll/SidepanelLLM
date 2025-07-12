@@ -1,48 +1,52 @@
-import type { PluginOption } from 'vite';
+import { BUILD_COMPLETE, LOCAL_RELOAD_SOCKET_URL } from '../consts.js';
+import MessageInterpreter from '../interpreter/index.js';
 import { WebSocket } from 'ws';
-import MessageInterpreter from '../interpreter';
-import { LOCAL_RELOAD_SOCKET_URL } from '../constant';
-import * as fs from 'fs';
-import path from 'path';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import type { PluginConfigType } from '../types.js';
+import type { PluginOption } from 'vite';
 
-type PluginConfig = {
-  onStart?: () => void;
-  reload?: boolean;
-  refresh?: boolean;
-};
+const injectionsPath = resolve(import.meta.dirname, '..', 'injections');
 
-const injectionsPath = path.resolve(__dirname, '..', '..', '..', 'build', 'injections');
+const refreshCode = readFileSync(resolve(injectionsPath, 'refresh.js'), 'utf-8');
+const reloadCode = readFileSync(resolve(injectionsPath, 'reload.js'), 'utf-8');
 
-const refreshCode = fs.readFileSync(path.resolve(injectionsPath, 'refresh.js'), 'utf-8');
-const reloadCode = fs.readFileSync(path.resolve(injectionsPath, 'reload.js'), 'utf-8');
-
-export function watchRebuildPlugin(config: PluginConfig): PluginOption {
-  let ws: WebSocket | null = null;
-  const id = Math.random().toString(36);
-  const { refresh, reload } = config;
-
+export const watchRebuildPlugin = (config: PluginConfigType): PluginOption => {
+  const { refresh, reload, id: _id, onStart } = config;
   const hmrCode = (refresh ? refreshCode : '') + (reload ? reloadCode : '');
 
-  function initializeWebSocket() {
-    if (!ws) {
-      ws = new WebSocket(LOCAL_RELOAD_SOCKET_URL);
-      ws.onopen = () => {
-        console.log(`[HMR] Connected to dev-server at ${LOCAL_RELOAD_SOCKET_URL}`);
-      };
-      ws.onerror = () => {
-        console.error(`[HMR] Failed to start server at ${LOCAL_RELOAD_SOCKET_URL}`);
-        console.error('PLEASE MAKE SURE YOU ARE RUNNING `pnpm dev-server`');
-        console.warn('Retrying in 5 seconds...');
-        ws = null;
-        setTimeout(() => initializeWebSocket(), 5_000);
-      };
-    }
-  }
+  let ws: WebSocket | null = null;
+
+  const id = _id ?? Math.random().toString(36);
+  let reconnectTries = 0;
+
+  const initializeWebSocket = () => {
+    ws = new WebSocket(LOCAL_RELOAD_SOCKET_URL);
+
+    ws.onopen = () => {
+      console.log(`[HMR] Connected to dev-server at ${LOCAL_RELOAD_SOCKET_URL}`);
+    };
+
+    ws.onerror = () => {
+      console.error(`[HMR] Failed to connect server at ${LOCAL_RELOAD_SOCKET_URL}`);
+      console.warn('Retrying in 3 seconds...');
+      ws = null;
+
+      if (reconnectTries <= 2) {
+        setTimeout(() => {
+          reconnectTries++;
+          initializeWebSocket();
+        }, 3_000);
+      } else {
+        console.error(`[HMR] Cannot establish connection to server at ${LOCAL_RELOAD_SOCKET_URL}`);
+      }
+    };
+  };
 
   return {
     name: 'watch-rebuild',
-    writeBundle() {
-      config.onStart?.();
+    closeBundle() {
+      onStart?.();
       if (!ws) {
         initializeWebSocket();
         return;
@@ -51,10 +55,7 @@ export function watchRebuildPlugin(config: PluginConfig): PluginOption {
        * When the build is complete, send a message to the reload server.
        * The reload server will send a message to the client to reload or refresh the extension.
        */
-      if (!ws) {
-        throw new Error('WebSocket is not initialized');
-      }
-      ws.send(MessageInterpreter.send({ type: 'build_complete', id }));
+      ws.send(MessageInterpreter.send({ type: BUILD_COMPLETE, id }));
     },
     generateBundle(_options, bundle) {
       for (const module of Object.values(bundle)) {
@@ -64,4 +65,4 @@ export function watchRebuildPlugin(config: PluginConfig): PluginOption {
       }
     },
   };
-}
+};

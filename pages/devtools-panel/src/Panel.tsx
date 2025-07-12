@@ -1,50 +1,45 @@
 import '@src/Panel.css';
-import { useStorageSuspense, withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
-import { exampleThemeStorage } from '@chrome-extension-boilerplate/storage';
-import { ComponentPropsWithoutRef } from 'react';
+import { t } from '@extension/i18n';
+import { PROJECT_URL_OBJECT, useStorage, withErrorBoundary, withSuspense } from '@extension/shared';
+import { exampleThemeStorage } from '@extension/storage';
+import { cn, ErrorDisplay, LoadingSpinner } from '@extension/ui';
+import type { ComponentPropsWithoutRef } from 'react';
 
 const Panel = () => {
-  const theme = useStorageSuspense(exampleThemeStorage);
+  const { isLight } = useStorage(exampleThemeStorage);
+  const logo = isLight ? 'devtools-panel/logo_horizontal.svg' : 'devtools-panel/logo_horizontal_dark.svg';
+
+  const goGithubSite = () => chrome.tabs.create(PROJECT_URL_OBJECT);
 
   return (
-    <div
-      className="App"
-      style={{
-        backgroundColor: theme === 'light' ? '#eee' : '#222',
-      }}>
-      <header className="App-header" style={{ color: theme === 'light' ? '#222' : '#eee' }}>
-        <img src={chrome.runtime.getURL('devtools-panel/logo.svg')} className="App-logo" alt="logo" />
+    <div className={cn('App', isLight ? 'bg-slate-50' : 'bg-gray-800')}>
+      <header className={cn('App-header', isLight ? 'text-gray-900' : 'text-gray-100')}>
+        <button onClick={goGithubSite}>
+          <img src={chrome.runtime.getURL(logo)} className="App-logo" alt="logo" />
+        </button>
         <p>
-          Edit <code>pages/devtools-panel/src/Panel.tsx</code> and save to reload.
+          Edit <code>pages/devtools-panel/src/Panel.tsx</code>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: theme === 'light' ? '#0281dc' : undefined, marginBottom: '10px' }}>
-          Learn React!
-        </a>
-        <ToggleButton>Toggle theme</ToggleButton>
+        <ToggleButton onClick={exampleThemeStorage.toggle}>{t('toggleTheme')}</ToggleButton>
       </header>
     </div>
   );
 };
 
 const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const theme = useStorageSuspense(exampleThemeStorage);
+  const { isLight } = useStorage(exampleThemeStorage);
+
   return (
     <button
-      className={
-        props.className +
-        ' ' +
-        'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-        (theme === 'light' ? 'bg-white text-black' : 'bg-black text-white')
-      }
+      className={cn(
+        props.className,
+        'mt-4 rounded px-4 py-1 font-bold shadow hover:scale-105',
+        isLight ? 'bg-white text-black' : 'bg-black text-white',
+      )}
       onClick={exampleThemeStorage.toggle}>
       {props.children}
     </button>
   );
 };
 
-export default withErrorBoundary(withSuspense(Panel, <div> Loading ... </div>), <div> Error Occur </div>);
+export default withErrorBoundary(withSuspense(Panel, <LoadingSpinner />), ErrorDisplay);
