@@ -39,13 +39,19 @@ const manifest = {
   },
   action: {
     default_popup: 'popup/index.html',
-    default_icon: 'icon-34.png',
+    default_icon: {
+      34: 'icon-34_light.png',
+      48: 'icon-48_light.png',
+      128: 'icon-128_light.png',
+    },
+    default_title: 'Click to open Side Panel',
   },
   chrome_url_overrides: {
     newtab: 'new-tab/index.html',
   },
   icons: {
-    '128': 'icon-128.png',
+    48: 'icon-48_light.png',
+    128: 'icon-128_light.png',
   },
   content_scripts: [
     {
