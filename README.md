@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> This repository is planned to be archived. Active development has moved to [opvelll/chrome_ai_extension_SidepanelLLM2](https://github.com/opvelll/chrome_ai_extension_SidepanelLLM2).
+>
+> このリポジトリは今後アーカイブ予定です。開発は [opvelll/chrome_ai_extension_SidepanelLLM2](https://github.com/opvelll/chrome_ai_extension_SidepanelLLM2) に移行しました。
+
 [日本語](#日本語) | [English](#english)
 #### english
 # Chrome Extension - SidepanelLLM
